@@ -1,7 +1,12 @@
+html {
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+  color: #FFF;
+}
+
 body {
   background-image: url('./images/background.png');
   min-width: 250px;
-  overflow: hidden;
 }
 
 .nis-button {
@@ -27,7 +32,7 @@ body {
 }
 
 .option-button {
-  width: 33%;
+  width: 31%;
 }
 .nis-button::before {
   width: 12px;
@@ -66,14 +71,54 @@ body {
   color: #ecc622;
   text-align: center;
   font-family: 'trajan-pro-3';
+  letter-spacing: .75px;
   text-shadow: 2px 2px 2px 2px rgb(155, 155, 155);
 }
 
-#option-buttons-wrapper {
+#checkbox-buttons-wrapper {
   display: flex;
+  align-items: flex-end;
+}
+
+#patch-types-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  max-height: 95px;
+  align-content: space-evenly;
+}
+
+#quests-completed-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  max-height: 95px;
+  align-content: space-evenly;
+}
+
+.checkbox-label-wrapper {
+  display: flex;
+  border-radius: 8px;
+  background-color: rgb(59, 59, 59);
+  padding: 2px;
+  padding-right: 4px;
+  margin: 4px 0px;
+  box-shadow: 0px 0px 5px grey;
+  width: 108px;
+}
+
+#checkbox-quests-wrapper {
+  width: 160px;
+}
+
+.checkbox-labels {
+  margin-left: 4px;
 }
 
 @font-face{
 	font-family:'trajan-pro-3';
 	src:url(./data/Trajans-Caps\ Normal.ttf)
 }
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');

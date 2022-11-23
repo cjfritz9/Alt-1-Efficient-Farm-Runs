@@ -1,28 +1,31 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router';
-import { UserProps } from '../models/props';
 
-const Landing: React.FC<UserProps> = ({ user }) => {
+const Landing: React.FC = () => {
   const navigate = useNavigate();
+
+  const userData = localStorage.getItem('efficient_farm_runs')
 
   const newPresetHandler = () => {
     navigate('/new-preset');
   };
 
   useEffect(() => {
-    if (user) {
+    if (userData) {
       navigate('/home')
+    } else {
+
     }
   })
 
   return (
-    <div style={{ color: 'white' }}>
+    <main className='outer-wrapper'>
       <div>
         <button className='nis-button' onClick={newPresetHandler}>
           Create New Preset
         </button>
       </div>
-    </div>
+    </main>
   );
 };
 

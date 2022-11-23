@@ -1,15 +1,15 @@
 import { createRoot } from 'react-dom/client';
 import React from 'react';
 import App from './components/App';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 const container = document.getElementById('app')! as HTMLDivElement;
 const root = createRoot(container);
 
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
+    <Router>
       <App />
-    </BrowserRouter>
+    </Router>
   </React.StrictMode>
 );
