@@ -2,7 +2,7 @@
 
 #### Efficient Farm Runs is a light-weight Alt 1 plugin that allows you to create presets for multiple types of farm runs, create a profile for which patches and items you have access to, and provide (or remind in my case) an optimal route with the most optimal teleports.
 
-##### Special thanks to:
+#### Special thanks to:
 
 ###### QuikkFreeze
 
