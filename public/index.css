@@ -1,59 +1,13 @@
 body {
   background-image: url('./images/background.png');
+  min-width: 250px;
+  overflow: hidden;
 }
-
-/* .nis-button {
-  background: url('images/button.png') 0px -100%/24px 400% repeat content-box;
-  position: relative;
-  height: 32px;
-  width: 100%;
-
-  font-family: 'trajan-pro-3';
-  text-shadow: 1px 1px 2px #ecc622;
-  font-size: 18px;
-  text-align: center;
-  color: #000;
-
-  cursor: pointer;
-}
-
-.nis-button::before {
-  width: 12px;
-  height: 100%;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  background: url('images/button.png') 0px 0px / 24px 400%;
-}
-
-.nis-button::after {
-  width: 12px;
-  height: 100%;
-  content: '';
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  background: url('images/button.png') -12px 0px / 24px 400%;
-}
-
-.nis-button:hover {
-  background-position: 0px -300%;
-}
-.nis-button:hover::before {
-  background-position: 0px -200%;
-}
-.nis-button:hover::after {
-  background-position: -12px -200%;
-}
-.nis-button:active,
-.nis-button.fakeactive {
-  -webkit-filter: brightness(1.2);
-  filter: brightness(1.2);
-} */
 
 .nis-button {
   border: none;
-  width: 100%;
+  outline: none;
+  width: 98%;
   height: 32px;
   position: relative;
   background: url('images/button.png') 0px -100%/24px 400% repeat content-box;
@@ -61,6 +15,8 @@ body {
   text-align: center;
   color: #000;
   font-family: 'trajan-pro-3';
+  font-weight: 600;
+  letter-spacing: .75px;
   text-shadow: 1px 1px 2px #ecc622;
   font-size: 18px;
   margin: 5px;
@@ -69,6 +25,10 @@ body {
   user-select: none;
   -webkit-user-select: none;
 }
+
+.option-button {
+  width: 33%;
+}
 .nis-button::before {
   width: 12px;
   height: 100%;
@@ -100,4 +60,20 @@ body {
 .nis-button.fakeactive {
   -webkit-filter: brightness(1.2);
   filter: brightness(1.2);
+}
+
+.preset-header {
+  color: #ecc622;
+  text-align: center;
+  font-family: 'trajan-pro-3';
+  text-shadow: 2px 2px 2px 2px rgb(155, 155, 155);
+}
+
+#option-buttons-wrapper {
+  display: flex;
+}
+
+@font-face{
+	font-family:'trajan-pro-3';
+	src:url(./data/Trajans-Caps\ Normal.ttf)
 }
