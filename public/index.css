@@ -93,9 +93,10 @@ body {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  align-items: flex-start;
-  max-height: 95px;
+  align-items: center;
+  justify-content: center;
   align-content: space-evenly;
+  max-height: 240px;
 }
 
 .checkbox-label-wrapper {
@@ -107,14 +108,25 @@ body {
   margin: 4px 0px;
   box-shadow: 0px 0px 5px grey;
   width: 108px;
+  cursor: pointer;
+}
+
+.checkbox-label-wrapper:hover {
+  background-color: rgb(0, 134, 0);
+  color: black;
 }
 
 #checkbox-quests-wrapper {
   width: 160px;
+  height: 40px;
+  align-items: center;
 }
 
 .checkbox-labels {
   margin-left: 4px;
+  cursor: pointer;
+  text-align: center;
+  width: 100%;
 }
 
 @font-face{

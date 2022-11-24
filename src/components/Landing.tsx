@@ -6,8 +6,8 @@ const Landing: React.FC = () => {
 
   const userData = localStorage.getItem('efficient_farm_runs')
 
-  const newPresetHandler = () => {
-    navigate('/new-preset');
+  const newUserHandler = () => {
+    navigate('/new-user/profile');
   };
 
   useEffect(() => {
@@ -21,8 +21,8 @@ const Landing: React.FC = () => {
   return (
     <main className='outer-wrapper'>
       <div>
-        <button className='nis-button' onClick={newPresetHandler}>
-          Create New Preset
+        <button className='nis-button' onClick={newUserHandler}>
+          Create New Profile
         </button>
       </div>
     </main>
