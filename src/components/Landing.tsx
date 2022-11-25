@@ -12,7 +12,7 @@ const Landing: React.FC = () => {
     )! as HTMLInputElement;
 
     if (!manualEntry) {
-      localStorage.setItem('efr-api-username', username);
+      localStorage.setItem('efr_api_username', username);
     }
     navigate(path);
   };
