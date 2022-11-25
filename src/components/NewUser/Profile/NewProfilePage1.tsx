@@ -1,10 +1,10 @@
 import React, { useRef } from 'react';
 import { useNavigate } from 'react-router';
-import { Quests } from '../models/profile';
-import { defaultProfile } from '../utils/defaults';
+import { Quests } from '../../../models/profile';
+import { defaultProfile } from '../../../utils/defaults';
 
-const NewProfile: React.FC = () => {
-  const profileRef = useRef(defaultProfile)
+const NewProfilePage1: React.FC = () => {
+  const profileRef = useRef(defaultProfile);
 
   const navigate = useNavigate();
 
@@ -37,6 +37,15 @@ const NewProfile: React.FC = () => {
     toggleActive: boolean,
     setting: string
   ): void => {
+    const element = document.getElementById(setting)!
+      .parentElement as HTMLDivElement;
+
+    if (element.classList[1]) {
+      element.classList.remove('cb-selected');
+    } else {
+      element.classList.add('cb-selected');
+    }
+
     Object.keys(profileRef.current.quests).forEach((quest) => {
       if (setting === quest) {
         profileRef.current.quests[quest as keyof Quests] = toggleActive;
@@ -47,14 +56,20 @@ const NewProfile: React.FC = () => {
     console.log(toggleActive, setting);
   };
 
+  const navHandler = (path: string): void => {
+    localStorage.setItem('efr_profile_1', JSON.stringify(profileRef.current));
+    navigate(path);
+  };
+
   return (
     <main className='outer-wrapper'>
       <h3 className='preset-header'>Quests Completed</h3>
-      <div id='quests-completed-wrapper'>
+      <div id='quests-completed-wrapper' className='selections-wrapper'>
         <div id='checkbox-quests-wrapper' className='checkbox-label-wrapper'>
           <input
             id='maba'
             type='checkbox'
+            style={{ display: 'none' }}
             onClick={(e: any) =>
               questsPresetUpdateHandler(e.target.checked, e.target.id)
             }
@@ -67,6 +82,7 @@ const NewProfile: React.FC = () => {
           <input
             id='plaguesEnd'
             type='checkbox'
+            style={{ display: 'none' }}
             onClick={(e: any) =>
               questsPresetUpdateHandler(e.target.checked, e.target.id)
             }
@@ -79,6 +95,7 @@ const NewProfile: React.FC = () => {
           <input
             id='lunarDiplomacy'
             type='checkbox'
+            style={{ display: 'none' }}
             onClick={(e: any) =>
               questsPresetUpdateHandler(e.target.checked, e.target.id)
             }
@@ -91,6 +108,7 @@ const NewProfile: React.FC = () => {
           <input
             id='fairyTale1'
             type='checkbox'
+            style={{ display: 'none' }}
             onClick={(e: any) =>
               questsPresetUpdateHandler(e.target.checked, e.target.id)
             }
@@ -103,6 +121,7 @@ const NewProfile: React.FC = () => {
           <input
             id='loveStory'
             type='checkbox'
+            style={{ display: 'none' }}
             onClick={(e: any) =>
               questsPresetUpdateHandler(e.target.checked, e.target.id)
             }
@@ -115,6 +134,7 @@ const NewProfile: React.FC = () => {
           <input
             id='theLightWithin'
             type='checkbox'
+            style={{ display: 'none' }}
             onClick={(e: any) =>
               questsPresetUpdateHandler(e.target.checked, e.target.id)
             }
@@ -127,6 +147,7 @@ const NewProfile: React.FC = () => {
           <input
             id='pog'
             type='checkbox'
+            style={{ display: 'none' }}
             onClick={(e: any) =>
               questsPresetUpdateHandler(e.target.checked, e.target.id)
             }
@@ -139,6 +160,7 @@ const NewProfile: React.FC = () => {
           <input
             id='tgbr'
             type='checkbox'
+            style={{ display: 'none' }}
             onClick={(e: any) =>
               questsPresetUpdateHandler(e.target.checked, e.target.id)
             }
@@ -148,11 +170,22 @@ const NewProfile: React.FC = () => {
           </label>
         </div>
       </div>
-      <button className='nis-button' onClick={testHandler}>
+      <button
+        className='nis-button'
+        style={{ margin: '20px 0 0 0' }}
+        onClick={() => navHandler('/new-user/profile/2')}
+      >
+        Next
+      </button>
+      <button
+        className='nis-button'
+        style={{ margin: '60px 0 0 0' }}
+        onClick={testHandler}
+      >
         Generate User Data
       </button>
     </main>
   );
 };
 
-export default NewProfile;
+export default NewProfilePage1;
