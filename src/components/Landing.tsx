@@ -20,7 +20,6 @@ const Landing: React.FC = () => {
   useEffect(() => {
     if (userData) {
       navigate('/home');
-    } else {
     }
   });
 

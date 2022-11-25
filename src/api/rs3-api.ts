@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 const proxyUrl = 'http://localhost:8010/proxy';
 
 export const getUserLevels = async (username: string) => {
@@ -12,7 +10,12 @@ export const getUserLevels = async (username: string) => {
 
     if (data) {
       if (data.skillvalues) {
-        return data;
+        return (
+          {
+            username: data.name,
+            levels: data.skillvalues
+          }
+        )
       }
       if (data.error) {
         console.log('FETCH ERROR: ', data.error);
