@@ -3,6 +3,7 @@ import * as Response from '../models/api-responses';
 import { questsArray } from '../utils/defaults';
 
 const proxyUrl = 'http://localhost:8010/proxy';
+const runescapeUrl = 'https://apps.runescape.com';
 
 let usersQuestsCompleted = 0;
 let questsInRunescape = 0;
@@ -12,12 +13,13 @@ let questData = null;
 export const getUserData = async (username: string) => {
   try {
     const profileResponse = await axios.get(
-      `${proxyUrl}/runemetrics/profile/profile?user=${username}`
+      `${proxyUrl || runescapeUrl}/runemetrics/profile/profile?user=${username}`
     );
     const questsResponse: Response.QuestData = await axios.get(
-      `${proxyUrl}/runemetrics/quests?user=${username}`
+      `${proxyUrl || runescapeUrl}/runemetrics/quests?user=${username}`
     );
 
+    // import this later
     const userDataObj: Response.UserData = {
       success: true,
       name: username,
@@ -75,7 +77,7 @@ export const getUserData = async (username: string) => {
       if (usersQuestsCompleted === questsInRunescape) {
         userHasQuestCape = true;
         Object.values(userDataObj.quests).map((quest) => {
-          quest = true;
+          return (quest = true);
         });
       }
 
