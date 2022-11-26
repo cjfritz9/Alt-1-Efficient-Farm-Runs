@@ -31,3 +31,15 @@ export const defaultProfile: Profile = {
   },
   items: {}
 };
+
+export const questsArray = [
+  "My Arm's Big Adventure",
+  "Plague's End",
+  'Lunar Diplomacy',
+  'A Fairy Tale I - Growing Pains',
+  'Tree Gnome Village',
+  'Love Story',
+  'The Light Within',
+  'The Prisoner of Glouphrie',
+  'The Great Brain Robbery'
+];

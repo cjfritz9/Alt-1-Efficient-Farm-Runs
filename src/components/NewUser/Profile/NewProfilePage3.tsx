@@ -1,29 +1,36 @@
 import { useState, useEffect } from 'react';
-import { getUserLevels } from '../../../api/rs3-api';
+import { getUserData } from '../../../api/rs3-api';
 
 const NewProfilePage3: React.FC = () => {
-  const [userData, setUserData] = useState<any>(null);
-  const [magicLvl, setMagicLvl] = useState<any>(0);
-  const [farmingLvl, setFarmingLvl] = useState<any>(0);
+  const [userData, setUserData] = useState<any>('loading');
+  const [success, setSuccess] = useState(false);
+  const [noUserError, setNoUserError] = useState('');
+  const [privateUserError, setPrivateUserError] = useState('');
+  const [fetchError, setFetchError] = useState('');
 
   const fetchData = async () => {
     const username = localStorage.getItem('efr_api_username')!;
-    const userLevels = await getUserLevels(username);
-    if (userLevels) {
-      console.log(userLevels.skillvalues);
+    const _userData = await getUserData(username);
 
-      userLevels.skillvalues.map((skill: { id: number; level: number }) => {
-        if (skill.id === 6) {
-          setMagicLvl(skill.level);
-        }
-        if (skill.id === 19) {
-          setFarmingLvl(skill.level);
-        }
-      });
-      console.log('MFL', magicLvl, farmingLvl);
+    if (_userData && typeof _userData === 'object' && _userData.success) {
+      setSuccess(_userData.success);
     }
-    console.log('LVLs', userLevels);
-    setUserData(userLevels);
+
+    if (_userData && typeof _userData === 'string') {
+      if (_userData === 'NO_PROFILE') {
+        setNoUserError(`${username} Not Found`);
+      }
+      if (_userData === 'PROFILE_PRIVATE') {
+        setPrivateUserError('Private Profile');
+      }
+    }
+
+    if (!_userData) {
+      setFetchError('No response from server. Try again after a few minutes.');
+    }
+
+    console.log('USER DATA', _userData);
+    setUserData(_userData);
   };
 
   useEffect(() => {
@@ -32,12 +39,29 @@ const NewProfilePage3: React.FC = () => {
 
   return (
     <main className='outer-wrapper'>
-      {userData && typeof userData === 'object' ? (
+      {userData === 'loading' ? (
+        <h3 className='preset-header'>Loading...</h3>
+      ) : fetchError ? (
         <>
-          {console.log('DATA: ', userData)}
+          <h3 className='preset-header'>{fetchError}</h3>
+        </>
+      ) : privateUserError ? (
+        <>
+          <h3 className='preset-header'>{privateUserError}</h3>
+        </>
+      ) : noUserError ? (
+        <>
+          <h3 className='preset-header'>{noUserError}</h3>
+        </>
+      ) : userData && success ? (
+        <>
           <h3 className='preset-header'>{userData.name}</h3>
-          <h3 className='preset-header'>Farming Level: {farmingLvl}</h3>
-          <h3 className='preset-header'>Magic Level: {magicLvl}</h3>
+          <h3 className='preset-header'>
+            Farming Level: {userData.levels.farmingLvl}
+          </h3>
+          <h3 className='preset-header'>
+            Magic Level: {userData.levels.magicLvl}
+          </h3>
           <div id='farming-items-wrapper' className='selections-wrapper'>
             <div className='checkbox-label-wrapper'>
               <input
@@ -61,7 +85,7 @@ const NewProfilePage3: React.FC = () => {
           </div>
         </>
       ) : (
-        <h3 className='preset-header'>Loading...</h3>
+        <h3 className='preset-header'>{fetchError}</h3>
       )}
     </main>
   );
