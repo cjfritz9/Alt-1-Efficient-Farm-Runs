@@ -4,10 +4,10 @@
 
 #### Special thanks to:
 
-###### QuikkFreeze
+##### QuikkFreeze
 
 for all of the help with TypeScript and being my Sr. Developer
 
-###### Skillbert
+##### Skillbert
 
 for creating Alt 1 and being so generous with helping other developers, providing Alt 1 minimal templates, writing hundreds if not thousands of lines of comments to explain your node packages and functions.
