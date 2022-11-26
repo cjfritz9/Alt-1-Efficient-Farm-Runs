@@ -164,6 +164,19 @@ body {
   margin-right: 5px;
 }
 
+#levels-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+#quest-completed {
+  color: green;
+}
+
+#quest-not-completed {
+  color: red;
+}
+
 .item-sprites {
   padding: 3px;
 }

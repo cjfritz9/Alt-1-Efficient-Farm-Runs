@@ -18,8 +18,6 @@ export const getUserData = async (username: string) => {
       `${proxyUrl}/runemetrics/quests?user=${username}`
     );
 
-    console.log(questsResponse)
-
     const userDataObj: Response.UserData = {
       success: true,
       name: username,
@@ -50,9 +48,6 @@ export const getUserData = async (username: string) => {
 
         usersQuestsCompleted = profileData.questscomplete;
 
-        if (usersQuestsCompleted === questsInRunescape) {
-          userHasQuestCape = true;
-        }
         for (const skill of profileData.skillvalues) {
           if (skill.id === 6) {
             userDataObj.levels.magicLvl = skill.level;
@@ -68,16 +63,20 @@ export const getUserData = async (username: string) => {
     }
 
     if (questsResponse) {
-      console.log("QR", questsResponse)
-      
+      console.log('QR', questsResponse);
+
       if (questsResponse.data.quests.length === 0) {
-        return 'NO_PROFILE'
+        return 'NO_PROFILE';
       }
-      
+
       questData = questsResponse.data.quests;
       questsInRunescape = questData.length;
 
       if (usersQuestsCompleted === questsInRunescape) {
+        userHasQuestCape = true;
+        Object.values(userDataObj.quests).map((quest) => {
+          quest = true;
+        });
       }
 
       // the quests array is ordered by completion status... unfortunately.
@@ -88,11 +87,9 @@ export const getUserData = async (username: string) => {
         usersQuestsCompleted
       );
 
-      const farmingQuests = await questsCompleted.filter(
-        (quest: Response.Quest) => {
-          return questsArray.includes(quest.title);
-        }
-      );
+      const farmingQuests = questsCompleted.filter((quest: Response.Quest) => {
+        return questsArray.includes(quest.title);
+      });
 
       const questTitles = farmingQuests.map((quest: Response.Quest) => {
         return quest.title;
