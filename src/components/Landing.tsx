@@ -13,6 +13,9 @@ const Landing: React.FC = () => {
 
     if (!manualEntry) {
       localStorage.setItem('efr_api_username', username);
+      localStorage.setItem('efr_user_data', 'automate_entry');
+    } else {
+      localStorage.setItem('efr_user_data', 'manual_entry');
     }
     navigate(path);
   };

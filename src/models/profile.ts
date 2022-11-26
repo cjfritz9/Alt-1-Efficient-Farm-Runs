@@ -10,6 +10,10 @@ export interface Quests {
   tgbr: boolean;
 }
 
+//maba = my arms big adventure
+//pog = prisoner of glouphrie
+//tbbr = the great brain robbery
+
 export interface Items {}
 
 export interface Profile {
