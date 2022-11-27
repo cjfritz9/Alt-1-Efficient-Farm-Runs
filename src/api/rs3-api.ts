@@ -1,23 +1,23 @@
 import axios from 'axios';
 import * as Response from '../models/api-responses';
-import { defaultProfile, questsArray } from '../utils/defaults';
+import { defaultProfile, profileData, questsArray } from '../utils/defaults';
 
 const proxyUrl = 'http://localhost:8010/proxy';
-const runescapeUrl = 'https://apps.runescape.com';
 
 export const getUserData = async (username: string) => {
-  const userDataObj = defaultProfile;
+  defaultProfile.reset();
+  const userDataObj = profileData;
+
   let usersQuestsCompleted = 0;
   let questsInRunescape = 0;
-  let userHasQuestCape = false;
   let questData = null;
 
   try {
     const profileResponse = await axios.get(
-      `${proxyUrl || runescapeUrl}/runemetrics/profile/profile?user=${username}`
+      `${proxyUrl}/runemetrics/profile/profile?user=${username}`
     );
     const questsResponse: Response.QuestData = await axios.get(
-      `${proxyUrl || runescapeUrl}/runemetrics/quests?user=${username}`
+      `${proxyUrl}/runemetrics/quests?user=${username}`
     );
 
     if (questsResponse.data && profileResponse.data) {
@@ -48,7 +48,7 @@ export const getUserData = async (username: string) => {
     }
 
     if (questsResponse) {
-      console.log('QR', questsResponse);
+      // console.log('QR', questsResponse);
 
       if (questsResponse.data.quests.length === 0) {
         return 'NO_PROFILE';
@@ -58,7 +58,7 @@ export const getUserData = async (username: string) => {
       questsInRunescape = questData.length;
 
       if (usersQuestsCompleted === questsInRunescape) {
-        userHasQuestCape = true;
+        userDataObj.userHasQuestCape = true;
         Object.values(userDataObj.quests).map((quest) => {
           return (quest = true);
         });
@@ -80,10 +80,6 @@ export const getUserData = async (username: string) => {
       const questTitles = farmingQuests.map((quest: Response.Quest) => {
         return quest.title;
       });
-
-      console.log('TITLES', questTitles);
-      console.log('UDB', userDataObj);
-      console.log('DEF', defaultProfile);
 
       if (farmingQuests.length > 0) {
         if (questTitles.includes(questsArray[0])) {
@@ -116,8 +112,8 @@ export const getUserData = async (username: string) => {
       }
     }
 
-    console.log('AFTER', userDataObj);
-    console.log('WE DID IT?', userDataObj);
+    // console.log('AFTER', userDataObj);
+    // console.log('WE DID IT?', userDataObj);
 
     return userDataObj;
   } catch (error) {

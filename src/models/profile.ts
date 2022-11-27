@@ -26,4 +26,5 @@ export interface Profile {
   quests: Quests;
   userHasQuestCape: boolean;
   items: Items;
+  reset?: any;
 }

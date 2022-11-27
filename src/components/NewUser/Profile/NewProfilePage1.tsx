@@ -5,7 +5,7 @@ import { defaultProfile } from '../../../utils/defaults';
 
 const NewProfilePage1: React.FC = () => {
   const [error, setError] = useState('');
-  const profileRef = useRef(defaultProfile);
+  const profileRef = useRef({ ...defaultProfile });
 
   const navigate = useNavigate();
 
