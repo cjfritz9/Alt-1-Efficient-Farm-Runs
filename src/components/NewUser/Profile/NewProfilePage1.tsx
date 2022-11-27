@@ -1,9 +1,10 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { Quests } from '../../../models/profile';
 import { defaultProfile } from '../../../utils/defaults';
 
 const NewProfilePage1: React.FC = () => {
+  const [error, setError] = useState('');
   const profileRef = useRef(defaultProfile);
 
   const navigate = useNavigate();
@@ -40,31 +41,48 @@ const NewProfilePage1: React.FC = () => {
     const element = document.getElementById(setting)!
       .parentElement as HTMLDivElement;
 
-    if (element.classList[1]) {
+    if (element.classList.contains('cb-selected')) {
       element.classList.remove('cb-selected');
     } else {
       element.classList.add('cb-selected');
     }
-
-    Object.keys(profileRef.current.quests).forEach((quest) => {
-      if (setting === quest) {
-        profileRef.current.quests[quest as keyof Quests] = toggleActive;
-
-        console.log(profileRef.current.quests);
-      }
-    });
-    console.log(toggleActive, setting);
+    profileRef.current.quests[setting as keyof Quests] = toggleActive;
   };
 
   const navHandler = (path: string): void => {
-    localStorage.setItem('efr_profile_1', JSON.stringify(profileRef.current));
+    const nameInput = document.getElementById(
+      'profile-name-input'
+    )! as HTMLInputElement;
+    if (nameInput.value) {
+      profileRef.current.name = nameInput.value;
+    } else {
+      return setError('Enter A Valid Name');
+    }
+    localStorage.setItem('efr_user_data', JSON.stringify(profileRef.current));
     navigate(path);
   };
 
   return (
     <main className='outer-wrapper'>
       <h3 className='preset-header'>Quests Completed</h3>
+      <div id='profile-input-wrapper'>
+        {error ? <div id='error-msg'>{error}</div> : null}
+        <input id='profile-name-input' placeholder='Profile Name'></input>
+      </div>
       <div id='quests-completed-wrapper' className='selections-wrapper'>
+        <div id='checkbox-quests-wrapper' className='checkbox-label-wrapper'>
+          <input
+            id='treeGnomeVillage'
+            type='checkbox'
+            style={{ display: 'none' }}
+            onClick={(e: any) =>
+              questsPresetUpdateHandler(e.target.checked, e.target.id)
+            }
+          ></input>
+          <label className='checkbox-labels' htmlFor='treeGnomeVillage'>
+            Tree Gnome Village
+          </label>
+        </div>
         <div id='checkbox-quests-wrapper' className='checkbox-label-wrapper'>
           <input
             id='maba'

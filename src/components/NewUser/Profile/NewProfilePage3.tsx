@@ -4,11 +4,10 @@ import { getUserData } from '../../../api/rs3-api';
 import { UserData } from '../../../models/api-responses';
 
 const NewProfilePage3: React.FC = () => {
-  const [userData, setUserData] = useState<UserData | any>('loading');
+  const [userData, setUserData] = useState<UserData | any>();
+  const [loading, setLoading] = useState(true);
   const [success, setSuccess] = useState(false);
-  const [noUserError, setNoUserError] = useState('');
-  const [privateUserError, setPrivateUserError] = useState('');
-  const [fetchError, setFetchError] = useState('');
+  const [error, setError] = useState('');
   const [userDataPref, setUserDataPref] = useState('');
   const [confirmData, setConfirmData] = useState(false);
 
@@ -16,7 +15,7 @@ const NewProfilePage3: React.FC = () => {
 
   const fetchData = async () => {
     const username = localStorage.getItem('efr_api_username')!;
-    const userPref = localStorage.getItem('efr_user_data');
+    const userPref = localStorage.getItem('efr_user_data_pref');
     userPref ? setUserDataPref(userPref) : navigate('/');
     const _userData: UserData | any = await getUserData(username);
 
@@ -26,46 +25,48 @@ const NewProfilePage3: React.FC = () => {
 
     if (_userData && typeof _userData === 'string') {
       if (_userData === 'NO_PROFILE') {
-        setNoUserError(`${username} Not Found`);
+        setError(`${username} Not Found`);
       }
       if (_userData === 'PROFILE_PRIVATE') {
-        setPrivateUserError('Private Profile');
+        setError('Private Profile');
       }
     }
 
     if (!_userData) {
-      setFetchError('No response from server. Try again after a few minutes.');
+      setError('No response from server. Try again after a few minutes.');
     }
 
     console.log('USER DATA', _userData);
     setUserData(_userData);
+    setLoading(false);
   };
 
   const confirmHandler = (status: boolean) => {
+    localStorage.setItem('efr_user_data', JSON.stringify(userData));
     setConfirmData(status);
   };
 
   useEffect(() => {
     fetchData();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <main className='outer-wrapper'>
       {userDataPref === 'automate_entry' && !confirmData ? (
-        userData === 'loading' ? (
+        loading ? (
           <h3 className='preset-header'>Loading...</h3>
-        ) : fetchError ? (
+        ) : error.includes('server') ? (
           <>
-            <h3 className='preset-header'>{fetchError}</h3>
+            <h3 className='preset-header'>{error}</h3>
           </>
-        ) : privateUserError ? (
+        ) : error.includes('Private') ? (
           <>
-            <h3 className='preset-header'>{privateUserError}</h3>
+            <h3 className='preset-header'>{error}</h3>
           </>
-        ) : noUserError ? (
+        ) : error.includes('Found') ? (
           <>
-            <h3 className='preset-header'>{noUserError}</h3>
+            <h3 className='preset-header'>{error}</h3>
           </>
         ) : userData && success ? (
           <>
@@ -73,15 +74,15 @@ const NewProfilePage3: React.FC = () => {
             <div id='user-data-wrapper'>
               <div className='left-panel-wrapper'>
                 <h4 className='data-field-headers'>Username</h4>
-                <span>{userData.name}</span>
-                <h4 className='data-field-headers'>Levels:</h4>
+                <div id='acc-info-username'>{userData.name}</div>
+                <h4 className='data-field-headers'>Levels</h4>
                 <div id='levels-wrapper'>
-                  <span>Farming Level: {userData.levels.farmingLvl}</span>
-                  <span>Magic Level: {userData.levels.magicLvl}</span>
+                  <span>Farming: {userData.levels.farmingLvl}</span>
+                  <span>Magic: {userData.levels.magicLvl}</span>
                 </div>
               </div>
               <div className='right-panel-wrapper'>
-                <h4 className='data-field-headers'>Quests Status:</h4>
+                <h4 className='data-field-headers'>Quests Status</h4>
                 <span>
                   {userData.quests.maba ? (
                     <div id='quest-completed'>
@@ -262,7 +263,7 @@ const NewProfilePage3: React.FC = () => {
             </button>
           </>
         ) : (
-          <h3 className='preset-header'>{fetchError}</h3>
+          <h3 className='preset-header'>{error}</h3>
         )
       ) : confirmData || userDataPref === 'manual_entry' ? (
         <>

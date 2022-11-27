@@ -17,7 +17,13 @@ export interface Quests {
 export interface Items {}
 
 export interface Profile {
+  success: boolean;
   name: string;
+  levels: {
+    magicLvl: number;
+    farmingLvl: number;
+  };
   quests: Quests;
+  userHasQuestCape: boolean;
   items: Items;
 }

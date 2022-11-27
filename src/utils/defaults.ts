@@ -17,6 +17,7 @@ export const defaultPresets: Preset = {
 };
 
 export const defaultProfile: Profile = {
+  success: false,
   name: '',
   quests: {
     maba: false,
@@ -29,6 +30,11 @@ export const defaultProfile: Profile = {
     pog: false,
     tgbr: false
   },
+  levels: {
+    magicLvl: 1,
+    farmingLvl: 1
+  },
+  userHasQuestCape: false,
   items: {}
 };
 

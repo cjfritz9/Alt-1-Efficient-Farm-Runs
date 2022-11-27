@@ -1,16 +1,17 @@
 import axios from 'axios';
 import * as Response from '../models/api-responses';
-import { questsArray } from '../utils/defaults';
+import { defaultProfile, questsArray } from '../utils/defaults';
 
 const proxyUrl = 'http://localhost:8010/proxy';
 const runescapeUrl = 'https://apps.runescape.com';
 
-let usersQuestsCompleted = 0;
-let questsInRunescape = 0;
-let userHasQuestCape = false;
-let questData = null;
-
 export const getUserData = async (username: string) => {
+  const userDataObj = defaultProfile;
+  let usersQuestsCompleted = 0;
+  let questsInRunescape = 0;
+  let userHasQuestCape = false;
+  let questData = null;
+
   try {
     const profileResponse = await axios.get(
       `${proxyUrl || runescapeUrl}/runemetrics/profile/profile?user=${username}`
@@ -19,27 +20,9 @@ export const getUserData = async (username: string) => {
       `${proxyUrl || runescapeUrl}/runemetrics/quests?user=${username}`
     );
 
-    // import this later
-    const userDataObj: Response.UserData = {
-      success: true,
-      name: username,
-      levels: {
-        magicLvl: 1,
-        farmingLvl: 1
-      },
-      userHasQuestCape,
-      quests: {
-        maba: false,
-        plaguesEnd: false,
-        lunarDiplomacy: false,
-        fairyTale1: false,
-        treeGnomeVillage: false,
-        loveStory: false,
-        theLightWithin: false,
-        pog: false,
-        tgbr: false
-      }
-    };
+    if (questsResponse.data && profileResponse.data) {
+      userDataObj.success = true;
+    }
 
     if (profileResponse && profileResponse.data) {
       const profileData: Response.ProfileData | Response.FetchError =
@@ -79,6 +62,7 @@ export const getUserData = async (username: string) => {
         Object.values(userDataObj.quests).map((quest) => {
           return (quest = true);
         });
+        return userDataObj;
       }
 
       // the quests array is ordered by completion status... unfortunately.
@@ -96,6 +80,10 @@ export const getUserData = async (username: string) => {
       const questTitles = farmingQuests.map((quest: Response.Quest) => {
         return quest.title;
       });
+
+      console.log('TITLES', questTitles);
+      console.log('UDB', userDataObj);
+      console.log('DEF', defaultProfile);
 
       if (farmingQuests.length > 0) {
         if (questTitles.includes(questsArray[0])) {
@@ -127,6 +115,8 @@ export const getUserData = async (username: string) => {
         }
       }
     }
+
+    console.log('AFTER', userDataObj);
     console.log('WE DID IT?', userDataObj);
 
     return userDataObj;

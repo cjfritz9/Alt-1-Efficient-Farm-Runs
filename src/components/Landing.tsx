@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 
 const Landing: React.FC = () => {
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const userData = localStorage.getItem('efficient_farm_runs');
@@ -12,10 +13,14 @@ const Landing: React.FC = () => {
     )! as HTMLInputElement;
 
     if (!manualEntry) {
-      localStorage.setItem('efr_api_username', username);
-      localStorage.setItem('efr_user_data', 'automate_entry');
+      if (!username) {
+        return setError('Enter A Valid Username');
+      } else {
+        localStorage.setItem('efr_api_username', username);
+        localStorage.setItem('efr_user_data_pref', 'automate_entry');
+      }
     } else {
-      localStorage.setItem('efr_user_data', 'manual_entry');
+      localStorage.setItem('efr_user_data_pref', 'manual_entry');
     }
     navigate(path);
   };
@@ -31,7 +36,12 @@ const Landing: React.FC = () => {
       <h3 className='preset-header'>Create New Profile</h3>
       <div id='levels-wrapper' className='selections-wrapper'>
         <label htmlFor='username-input'>Look Me Up! </label>
-        <input id='username-input' placeholder='Username'></input>
+        <input
+          id='username-input'
+          placeholder='Username'
+          maxLength={12}
+        ></input>
+        <div id='error-msg'>{error}</div>
       </div>
       <div className='dbl-button-wrapper'>
         <button

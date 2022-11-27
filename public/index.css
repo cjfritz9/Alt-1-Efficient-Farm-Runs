@@ -121,7 +121,7 @@ body {
 }
 
 #quests-completed-wrapper {
-  max-height: 240px;
+  max-height: 300px;
 }
 
 .checkbox-label-wrapper {
@@ -177,9 +177,26 @@ body {
   margin-right: 5px;
 }
 
+.skill-icons {
+  margin-right: 15px;
+}
+
 #levels-wrapper {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.level-input {
+  font-weight: bold;
+  background-color: rgb(38, 40, 100);
+  border: none;
+  font-size: 36px;
+  outline: none;
+  color: #fff;
+  border-radius: 3px;
+  text-align: center;
+  width: 100px;
 }
 
 #quest-completed {
@@ -194,11 +211,67 @@ body {
   align-items: center;
   color: rgb(255, 132, 132);
   margin-bottom: 3px;
-
 }
 
 .item-sprites {
   padding: 3px;
+}
+
+#acc-info-username {
+  margin-bottom: 50px;
+}
+
+#profile-input-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#error-msg {
+  text-align: center;
+  color: red;
+  text-shadow: 1px 1px 1px #000;
+  margin-bottom: 15px;
+  font-size: 24px;
+}
+
+#profile-name-input {
+  font-weight: bold;
+  margin-left: 10px;
+  background-color: rgb(38, 40, 100);
+  border: none;
+  outline: none;
+  height: 20px;
+  color: #fff;
+  border-radius: 3px;
+  text-align: center;
+  margin: 10px 0px;
+}
+
+#profile-name-input::placeholder {
+  font-weight: bold;
+  color: #FFF;
+  text-align: center;
+}
+
+#username-input {
+  font-weight: bold;
+  margin-left: 10px;
+  background-color: rgb(38, 40, 100);
+  border: none;
+  outline: none;
+  height: 20px;
+  color: #fff;
+  border-radius: 3px;
+  text-align: center;
+  margin: 10px 0px;
+}
+
+#username-input::placeholder {
+  font-weight: bold;
+  color: #FFF;
+  text-align: center;
 }
 
 #user-data-wrapper {
