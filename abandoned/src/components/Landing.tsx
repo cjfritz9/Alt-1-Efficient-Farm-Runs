@@ -1,30 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
-import defaultProfile from '../utils/defaults';
 
 const Landing: React.FC = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
+  const userData = localStorage.getItem('efficient_farm_runs');
+
   const newUserHandler = (path: string, manualEntry: boolean) => {
-    const { value: profileName } = document.getElementById(
+    const { value: username } = document.getElementById(
       'username-input'
     )! as HTMLInputElement;
 
-    if (!profileName) {
-      return setError('Enter A Valid Name');
+    if (!manualEntry) {
+      if (!username) {
+        return setError('Enter A Valid Username');
+      } else {
+        localStorage.setItem('efr_api_username', username);
+        localStorage.setItem('efr_user_data_pref', 'automate_entry');
+      }
     } else {
-      const newProfile = defaultProfile;
-      newProfile.name = profileName;
-      localStorage.setItem('efficient_farm_runs', JSON.stringify(newProfile));
+      localStorage.setItem('efr_user_data_pref', 'manual_entry');
     }
-
     navigate(path);
   };
 
   useEffect(() => {
-    const prevData = localStorage.getItem('efficient_farm_runs');
-    if (prevData) {
+    if (userData) {
       navigate('/home');
     }
   });

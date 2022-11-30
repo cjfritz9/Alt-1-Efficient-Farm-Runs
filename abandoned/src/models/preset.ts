@@ -10,7 +10,7 @@ export interface PatchTypes {
   mushroom: boolean;
 }
 
-export default interface Preset {
+export interface Preset {
   name: string;
   patchTypes: PatchTypes;
 }

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { getUserData } from '../../../api/rs3-api';
 import { UserData } from '../../../models/api-responses';
 
 const NewProfilePage3: React.FC = () => {
@@ -16,7 +17,28 @@ const NewProfilePage3: React.FC = () => {
     const username = localStorage.getItem('efr_api_username')!;
     const userPref = localStorage.getItem('efr_user_data_pref');
     userPref ? setUserDataPref(userPref) : navigate('/');
+    const _userData: UserData | any = await getUserData(username);
 
+    if (_userData && _userData.success) {
+      setSuccess(_userData.success);
+    }
+
+    if (_userData && typeof _userData === 'string') {
+      if (_userData === 'NO_PROFILE') {
+        setError(`${username} Not Found`);
+      }
+      if (_userData === 'PROFILE_PRIVATE') {
+        setError('Private Profile');
+      }
+    }
+
+    if (!_userData) {
+      setError('No response from server. Try again after a few minutes.');
+    }
+
+    console.log('USER DATA', _userData);
+    setUserData(_userData);
+    setLoading(false);
   };
 
   const confirmHandler = (status: boolean) => {

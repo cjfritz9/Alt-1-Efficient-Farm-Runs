@@ -1,7 +1,8 @@
-import Preset, { UserPresets } from '../models/preset';
-import Profile from '../models/profile';
+import { Preset } from '../models/preset';
+import { Profile } from '../models/profile';
+// import * as _ from 'lodash'
 
-export const defaultPreset: Preset = {
+export const defaultPresets: Preset = {
   name: '',
   patchTypes: {
     allotment: false,
@@ -16,43 +17,8 @@ export const defaultPreset: Preset = {
   }
 };
 
-class Profile {
-  name = ''
-  quests = {
-    maba: false,
-    lunarDiplomacy: false,
-    plaguesEnd: false,
-    fairyTale1: false,
-    treeGnomeVillage: false,
-    loveStory: false,
-    theLightWithin: false,
-    pog: false,
-    tgbr: false
-  }
-  levels = {
-    magicLvl: 1,
-    farmingLvl: 1
-  }
-  userHasQuestCape = false
-  items = {},
-  presets = {
-    preset1: {
-      presets: defaultPreset
-    },
-    preset2: {
-      presets: defaultPreset
-    },
-    preset3: {
-      presets: defaultPreset
-    }
-  }
-
-  constructor() {
-    
-  }
-}
-
 export const profileData: Profile = {
+  success: false,
   name: '',
   quests: {
     maba: false,
@@ -70,21 +36,11 @@ export const profileData: Profile = {
     farmingLvl: 1
   },
   userHasQuestCape: false,
-  items: {},
-  presets: {
-    preset1: {
-      presets: defaultPreset
-    },
-    preset2: {
-      presets: defaultPreset
-    },
-    preset3: {
-      presets: defaultPreset
-    }
-  }
+  items: {}
 };
 
 const resetProfile = () => {
+  profileData.success = false;
   profileData.name = '';
   profileData.quests.maba = false;
   profileData.quests.lunarDiplomacy = false;
@@ -98,7 +54,8 @@ const resetProfile = () => {
   profileData.items = {};
 };
 
-const defaultProfile: Profile = {
+export const defaultProfile: Profile = {
+  success: false,
   name: '',
   quests: {
     maba: false,
@@ -117,17 +74,6 @@ const defaultProfile: Profile = {
   },
   userHasQuestCape: false,
   items: {},
-  presets: {
-    preset1: {
-      presets: defaultPreset
-    },
-    preset2: {
-      presets: defaultPreset
-    },
-    preset3: {
-      presets: defaultPreset
-    }
-  },
   reset: resetProfile
 };
 
@@ -142,5 +88,3 @@ export const questsArray = [
   'The Prisoner of Glouphrie',
   'The Great Brain Robbery'
 ];
-
-export default defaultProfile;

@@ -1,5 +1,3 @@
-import { UserPresets } from './preset';
-
 export interface Quests {
   maba: boolean;
   plaguesEnd: boolean;
@@ -18,7 +16,8 @@ export interface Quests {
 
 export interface Items {}
 
-export default interface Profile {
+export interface Profile {
+  success: boolean;
   name: string;
   levels: {
     magicLvl: number;
@@ -27,6 +26,5 @@ export default interface Profile {
   quests: Quests;
   userHasQuestCape: boolean;
   items: Items;
-  presets: UserPresets;
   reset?: any;
 }
