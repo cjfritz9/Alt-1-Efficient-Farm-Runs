@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import { enterSubmitHandler } from '../../../utils/helpers';
 
 const NewProfilePage2: React.FC = () => {
   const [error, setError] = useState('');
@@ -15,8 +14,8 @@ const NewProfilePage2: React.FC = () => {
     )! as HTMLInputElement;
     if (
       inputMagicLvl &&
-      inputFarmingLvl &&
       +inputMagicLvl &&
+      inputFarmingLvl &&
       +inputFarmingLvl
     ) {
       const userData = JSON.parse(localStorage.getItem('efficient_farm_runs')!);
@@ -28,6 +27,12 @@ const NewProfilePage2: React.FC = () => {
       return setError('Enter Your Levels!');
     }
     navigate(path);
+  };
+
+  const enterSubmitHandler = (e: any) => {
+    if (e.key === 'Enter' && e.shiftKey === false) {
+      navHandler('/new-user/presets/1');
+    }
   };
 
   return (
@@ -67,20 +72,20 @@ const NewProfilePage2: React.FC = () => {
           className='level-input'
           placeholder='1'
           maxLength={3}
-          // onKeyDown={(e) => enterSubmitHandler(e)}
+          onKeyDown={(e) => enterSubmitHandler(e)}
         ></input>
       </div>
       <div id='error-msg'>{error}</div>
       <div className='dbl-btn-wrapper'>
         <button
           className='nis-button nis-button-alt'
-          onClick={() => navigate('/new-user/profile/1')}
+          onClick={() => navigate('/new-user/presets/1')}
         >
           Back
         </button>
         <button
           className='nis-button'
-          onClick={() => navHandler('/new-user/profile/3')}
+          onClick={() => navHandler('/new-user/presets/1')}
         >
           Next
         </button>

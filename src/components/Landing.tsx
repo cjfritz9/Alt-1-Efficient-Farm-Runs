@@ -41,6 +41,12 @@ const Landing: React.FC = () => {
     localStorage.setItem('efficient_farm_runs', '{"completed": true}');
     window.location.reload();
   };
+  
+  const enterSubmitHandler = (e: any) => {
+    if (e.key === 'Enter' && e.shiftKey === false) {
+      navHandler('/new-user/profile/1');
+    }
+  };
 
   useEffect(() => {
     const data = localStorage.getItem('efficient_farm_runs');
@@ -85,7 +91,8 @@ const Landing: React.FC = () => {
             <input
               id='username-input'
               placeholder='Pick a name!'
-              maxLength={12}
+                maxLength={12}
+                onKeyDown={(e) => enterSubmitHandler(e)}
             ></input>
           </div>
           <div className='dbl-button-wrapper'>
