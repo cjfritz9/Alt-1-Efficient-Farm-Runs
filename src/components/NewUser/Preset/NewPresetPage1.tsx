@@ -1,10 +1,10 @@
 import React, { useRef } from 'react';
 import { useNavigate } from 'react-router';
 import { PatchTypes } from '../../../models/preset';
-import { defaultPresets } from '../../../utils/defaults';
+import { defaultPreset } from '../../../utils/defaults';
 
 const NewPreset1: React.FC = () => {
-  const presetRef = useRef(defaultPresets);
+  const presetRef = useRef(defaultPreset);
 
   const navigate = useNavigate();
 

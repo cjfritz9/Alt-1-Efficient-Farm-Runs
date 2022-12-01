@@ -1,4 +1,4 @@
-import Preset, { UserPresets } from '../models/preset';
+import Preset from '../models/preset';
 import Profile from '../models/profile';
 
 export const defaultPreset: Preset = {
@@ -15,42 +15,6 @@ export const defaultPreset: Preset = {
     mushroom: false
   }
 };
-
-class Profile {
-  name = ''
-  quests = {
-    maba: false,
-    lunarDiplomacy: false,
-    plaguesEnd: false,
-    fairyTale1: false,
-    treeGnomeVillage: false,
-    loveStory: false,
-    theLightWithin: false,
-    pog: false,
-    tgbr: false
-  }
-  levels = {
-    magicLvl: 1,
-    farmingLvl: 1
-  }
-  userHasQuestCape = false
-  items = {},
-  presets = {
-    preset1: {
-      presets: defaultPreset
-    },
-    preset2: {
-      presets: defaultPreset
-    },
-    preset3: {
-      presets: defaultPreset
-    }
-  }
-
-  constructor() {
-    
-  }
-}
 
 export const profileData: Profile = {
   name: '',
@@ -69,7 +33,6 @@ export const profileData: Profile = {
     magicLvl: 1,
     farmingLvl: 1
   },
-  userHasQuestCape: false,
   items: {},
   presets: {
     preset1: {
@@ -81,7 +44,8 @@ export const profileData: Profile = {
     preset3: {
       presets: defaultPreset
     }
-  }
+  },
+  completed: false
 };
 
 const resetProfile = () => {
@@ -115,7 +79,6 @@ const defaultProfile: Profile = {
     magicLvl: 1,
     farmingLvl: 1
   },
-  userHasQuestCape: false,
   items: {},
   presets: {
     preset1: {
@@ -128,7 +91,8 @@ const defaultProfile: Profile = {
       presets: defaultPreset
     }
   },
-  reset: resetProfile
+  reset: resetProfile,
+  completed: false
 };
 
 export const questsArray = [

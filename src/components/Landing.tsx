@@ -6,55 +6,102 @@ const Landing: React.FC = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const newUserHandler = (path: string, manualEntry: boolean) => {
-    const { value: profileName } = document.getElementById(
+  const navHandler = (path: string) => {
+    const nameInput = document.getElementById(
       'username-input'
-    )! as HTMLInputElement;
+    ) as HTMLInputElement;
 
-    if (!profileName) {
-      return setError('Enter A Valid Name');
-    } else {
-      const newProfile = defaultProfile;
-      newProfile.name = profileName;
-      localStorage.setItem('efficient_farm_runs', JSON.stringify(newProfile));
+    if (nameInput) {
+      const profileName = nameInput.value;
+      if (profileName) {
+        const newProfile = defaultProfile;
+        newProfile.name = profileName;
+        localStorage.setItem('efficient_farm_runs', JSON.stringify(newProfile));
+      } else {
+        return setError('Enter A Valid Name');
+      }
     }
-
     navigate(path);
   };
 
-  useEffect(() => {
-    const prevData = localStorage.getItem('efficient_farm_runs');
-    if (prevData) {
-      navigate('/home');
+  const confirmResetHandler = (confirmation: boolean) => {
+    if (confirmation) {
+      defaultProfile.reset();
+      localStorage.setItem(
+        'efficient_farm_runs',
+        JSON.stringify(defaultProfile)
+      );
+      setError('');
+    } else {
+      navHandler('/home');
     }
-  });
+  };
+
+  const devHelper = () => {
+    localStorage.setItem('efficient_farm_runs', '{"completed": true}');
+    window.location.reload();
+  };
+
+  useEffect(() => {
+    const data = localStorage.getItem('efficient_farm_runs');
+    if (data) {
+      console.log(data);
+      const prevProfile = JSON.parse(data);
+      if (prevProfile && prevProfile.completed) {
+        setError('Profile Detected');
+      }
+    }
+  }, []);
 
   return (
     <main className='outer-wrapper'>
-      <h3 className='preset-header'>Create New Profile</h3>
-      <div id='levels-wrapper' className='selections-wrapper'>
-        <label htmlFor='username-input'>Look Me Up! </label>
-        <input
-          id='username-input'
-          placeholder='Username'
-          maxLength={12}
-        ></input>
-        <div id='error-msg'>{error}</div>
-      </div>
-      <div className='dbl-button-wrapper'>
-        <button
-          className='nis-button nis-button-alt'
-          onClick={() => newUserHandler('/new-user/profile/1', true)}
-        >
-          Manual Entry
-        </button>
-        <button
-          className='nis-button'
-          onClick={() => newUserHandler('/new-user/profile/3', false)}
-        >
-          Submit
-        </button>
-      </div>
+      <h3 className='preset-header'>Profile</h3>
+      {error && error.includes('Profile') ? (
+        <>
+          <div id='error-msg'>{error}</div>
+          <div id='error-txt-body'>
+            It looks like you have already created a profile. Would you like to
+            delete it and start over?
+          </div>
+          <div className='dbl-btn-wrapper'>
+            <button
+              onClick={() => confirmResetHandler(false)}
+              className='nis-button nis-button-alt'
+            >
+              No
+            </button>
+            <button
+              onClick={() => confirmResetHandler(true)}
+              className='nis-button'
+            >
+              Yes
+            </button>
+          </div>
+        </>
+      ) : (
+        <>
+          <div id='levels-wrapper' className='selections-wrapper'>
+            <label htmlFor='username-input'>New Profile</label>
+            <input
+              id='username-input'
+              placeholder='Pick a name!'
+              maxLength={12}
+            ></input>
+          </div>
+          <div className='dbl-button-wrapper'>
+            <div id='error-msg'>{error}</div>
+            <button
+              className='nis-button'
+              onClick={() => navHandler('/new-user/profile/1')}
+            >
+              Next
+            </button>
+          </div>
+        </>
+      )}
+      <button onClick={() => devHelper()} className='nis-button'>
+        Helper
+      </button>
     </main>
   );
 };

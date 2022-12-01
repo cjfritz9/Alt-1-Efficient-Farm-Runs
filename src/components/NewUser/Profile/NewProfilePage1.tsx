@@ -1,38 +1,13 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { useNavigate } from 'react-router';
-import { Quests } from '../../../models/profile';
-import { defaultProfile } from '../../../utils/defaults';
+import Profile, { Quests } from '../../../models/profile';
 
 const NewProfilePage1: React.FC = () => {
-  const [error, setError] = useState('');
-  const profileRef = useRef({ ...defaultProfile });
+  const profileRef = useRef<Profile>(
+    JSON.parse(localStorage.getItem('efficient_farm_runs')!)
+  );
 
   const navigate = useNavigate();
-
-  const testHandler = () => {
-    localStorage.setItem(
-      'efficient_farm_runs',
-      JSON.stringify({
-        previousUser: true
-      })
-    );
-
-    localStorage.setItem(
-      'efr_presets',
-      JSON.stringify({
-        preset1: {
-          name: 'Tree Run'
-        },
-        preset2: {
-          name: 'Herb Run'
-        },
-        preset3: {
-          name: 'Full Run'
-        }
-      })
-    );
-    navigate('/');
-  };
 
   const questsPresetUpdateHandler = (
     toggleActive: boolean,
@@ -50,25 +25,16 @@ const NewProfilePage1: React.FC = () => {
   };
 
   const navHandler = (path: string): void => {
-    const nameInput = document.getElementById(
-      'profile-name-input'
-    )! as HTMLInputElement;
-    if (nameInput.value) {
-      profileRef.current.name = nameInput.value;
-    } else {
-      return setError('Enter A Valid Name');
-    }
-    localStorage.setItem('efr_user_data', JSON.stringify(profileRef.current));
+    localStorage.setItem(
+      'efficient_farm_runs',
+      JSON.stringify(profileRef.current)
+    );
     navigate(path);
   };
 
   return (
     <main className='outer-wrapper'>
       <h3 className='preset-header'>Quests Completed</h3>
-      <div id='profile-input-wrapper'>
-        {error ? <div id='error-msg'>{error}</div> : null}
-        <input id='profile-name-input' placeholder='Profile Name'></input>
-      </div>
       <div id='quests-completed-wrapper' className='selections-wrapper'>
         <div id='checkbox-quests-wrapper' className='checkbox-label-wrapper'>
           <input
@@ -188,20 +154,22 @@ const NewProfilePage1: React.FC = () => {
           </label>
         </div>
       </div>
-      <button
-        className='nis-button'
-        style={{ margin: '20px 0 0 0' }}
-        onClick={() => navHandler('/new-user/profile/2')}
-      >
-        Next
-      </button>
-      <button
-        className='nis-button'
-        style={{ margin: '60px 0 0 0' }}
-        onClick={testHandler}
-      >
-        Generate User Data
-      </button>
+      <div className='dbl-btn-wrapper'>
+        <button
+          className='nis-button nis-button-alt'
+          style={{ margin: '20px 0 0 0' }}
+          onClick={() => navHandler('/')}
+        >
+          Back
+        </button>
+        <button
+          className='nis-button'
+          style={{ margin: '20px 0 0 0' }}
+          onClick={() => navHandler('/new-user/profile/2')}
+        >
+          Next
+        </button>
+      </div>
     </main>
   );
 };

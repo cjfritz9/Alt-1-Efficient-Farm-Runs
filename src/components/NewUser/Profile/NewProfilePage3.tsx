@@ -1,253 +1,29 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { UserData } from '../../../models/api-responses';
 
 const NewProfilePage3: React.FC = () => {
-  const [userData, setUserData] = useState<UserData | any>();
-  const [loading, setLoading] = useState(true);
-  const [success, setSuccess] = useState(false);
-  const [error, setError] = useState('');
-  const [userDataPref, setUserDataPref] = useState('');
-  const [confirmData, setConfirmData] = useState(false);
-
+  const [userData, setUserData] = useState(null);
   const navigate = useNavigate();
 
-  const fetchData = async () => {
-    const username = localStorage.getItem('efr_api_username')!;
-    const userPref = localStorage.getItem('efr_user_data_pref');
-    userPref ? setUserDataPref(userPref) : navigate('/');
-
-  };
-
-  const confirmHandler = (status: boolean) => {
-    localStorage.setItem('efr_user_data', JSON.stringify(userData));
-    setConfirmData(status);
+  const navHandler = (url: string) => {
+    localStorage.setItem('efficient_farm_runs', JSON.stringify(userData));
+    navigate(url);
   };
 
   useEffect(() => {
-    fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const data = localStorage.getItem('efficient_farm_runs');
+    if (data) {
+      setUserData(JSON.parse(data));
+    }
   }, []);
 
   return (
     <main className='outer-wrapper'>
-      {userDataPref === 'automate_entry' && !confirmData ? (
-        loading ? (
-          <h3 className='preset-header'>Loading...</h3>
-        ) : error.includes('server') ? (
-          <>
-            <h3 className='preset-header'>{error}</h3>
-          </>
-        ) : error.includes('Private') ? (
-          <>
-            <h3 className='preset-header'>{error}</h3>
-          </>
-        ) : error.includes('Found') ? (
-          <>
-            <h3 className='preset-header'>{error}</h3>
-          </>
-        ) : userData && success ? (
-          <>
-            <h3 className='preset-header'>Account Info</h3>
-            <div id='user-data-wrapper'>
-              <div className='left-panel-wrapper'>
-                <h4 className='data-field-headers'>Username</h4>
-                <div id='acc-info-username'>{userData.name}</div>
-                <h4 className='data-field-headers'>Levels</h4>
-                <div id='levels-wrapper'>
-                  <span>Farming: {userData.levels.farmingLvl}</span>
-                  <span>Magic: {userData.levels.magicLvl}</span>
-                </div>
-              </div>
-              <div className='right-panel-wrapper'>
-                <h4 className='data-field-headers'>Quests Status</h4>
-                <span>
-                  {userData.quests.maba ? (
-                    <div id='quest-completed'>
-                      <img
-                        className='check-x-img'
-                        src='https://i.ibb.co/DK4Gpqv/green-check.png'
-                        alt=''
-                      />
-                      My Arm's Big Adventure
-                    </div>
-                  ) : (
-                    <div id='quest-not-completed'>
-                      <img
-                        className='check-x-img'
-                        src='https://i.ibb.co/k5bn1SD/red-x.png'
-                        alt=''
-                      />
-                      My Arm's Big Adventure
-                    </div>
-                  )}
-                  {userData.quests.lunarDiplomacy ? (
-                    <div id='quest-completed'>
-                      <img
-                        className='check-x-img'
-                        src='https://i.ibb.co/DK4Gpqv/green-check.png'
-                        alt=''
-                      />
-                      Lunar Diplomacy
-                    </div>
-                  ) : (
-                    <div id='quest-not-completed'>
-                      <img
-                        className='check-x-img'
-                        src='https://i.ibb.co/k5bn1SD/red-x.png'
-                        alt=''
-                      />
-                      Lunar Diplomacy
-                    </div>
-                  )}
-                  {userData.quests.plaguesEnd ? (
-                    <div id='quest-completed'>
-                      <img
-                        className='check-x-img'
-                        src='https://i.ibb.co/DK4Gpqv/green-check.png'
-                        alt=''
-                      />
-                      Plague's End
-                    </div>
-                  ) : (
-                    <div id='quest-not-completed'>
-                      <img
-                        className='check-x-img'
-                        src='https://i.ibb.co/k5bn1SD/red-x.png'
-                        alt=''
-                      />
-                      Plague's End
-                    </div>
-                  )}
-                  {userData.quests.fairyTale1 ? (
-                    <div id='quest-completed'>
-                      <img
-                        className='check-x-img'
-                        src='https://i.ibb.co/DK4Gpqv/green-check.png'
-                        alt=''
-                      />
-                      Fairy Tale Pt. 1
-                    </div>
-                  ) : (
-                    <div id='quest-not-completed'>
-                      <img
-                        className='check-x-img'
-                        src='https://i.ibb.co/k5bn1SD/red-x.png'
-                        alt=''
-                      />
-                      Fairy Tale Pt. 1
-                    </div>
-                  )}
-                  {userData.quests.treeGnomeVillage ? (
-                    <div id='quest-completed'>
-                      <img
-                        className='check-x-img'
-                        src='https://i.ibb.co/DK4Gpqv/green-check.png'
-                        alt=''
-                      />
-                      Tree Gnome Village
-                    </div>
-                  ) : (
-                    <div id='quest-not-completed'>
-                      <img
-                        className='check-x-img'
-                        src='https://i.ibb.co/k5bn1SD/red-x.png'
-                        alt=''
-                      />
-                      Tree Gnome Village
-                    </div>
-                  )}
-                  {userData.quests.loveStory ? (
-                    <div id='quest-completed'>
-                      <img
-                        className='check-x-img'
-                        src='https://i.ibb.co/DK4Gpqv/green-check.png'
-                        alt=''
-                      />
-                      Love Story
-                    </div>
-                  ) : (
-                    <div id='quest-not-completed'>
-                      <img
-                        className='check-x-img'
-                        src='https://i.ibb.co/k5bn1SD/red-x.png'
-                        alt=''
-                      />
-                      Love Story
-                    </div>
-                  )}
-                  {userData.quests.theLightWithin ? (
-                    <div id='quest-completed'>
-                      <img
-                        className='check-x-img'
-                        src='https://i.ibb.co/DK4Gpqv/green-check.png'
-                        alt=''
-                      />
-                      The Light Within
-                    </div>
-                  ) : (
-                    <div id='quest-not-completed'>
-                      <img
-                        className='check-x-img'
-                        src='https://i.ibb.co/k5bn1SD/red-x.png'
-                        alt=''
-                      />
-                      The Light Within
-                    </div>
-                  )}
-                  {userData.quests.pog ? (
-                    <div id='quest-completed'>
-                      <img
-                        className='check-x-img'
-                        src='https://i.ibb.co/DK4Gpqv/green-check.png'
-                        alt=''
-                      />
-                      Prisoner of Glouphrie
-                    </div>
-                  ) : (
-                    <div id='quest-not-completed'>
-                      <img
-                        className='check-x-img'
-                        src='https://i.ibb.co/k5bn1SD/red-x.png'
-                        alt=''
-                      />
-                      Prisoner of Glouphrie
-                    </div>
-                  )}
-                  {userData.quests.tgbr ? (
-                    <div id='quest-completed'>
-                      <img
-                        className='check-x-img'
-                        src='https://i.ibb.co/DK4Gpqv/green-check.png'
-                        alt=''
-                      />
-                      The Great Brain Robbery
-                    </div>
-                  ) : (
-                    <div id='quest-not-completed'>
-                      <img
-                        className='check-x-img'
-                        src='https://i.ibb.co/k5bn1SD/red-x.png'
-                        alt=''
-                      />
-                      The Great Brain Robbery
-                    </div>
-                  )}
-                </span>
-              </div>
-            </div>
-            <button className='nis-button' onClick={() => confirmHandler(true)}>
-              Confirm
-            </button>
-          </>
-        ) : (
-          <h3 className='preset-header'>{error}</h3>
-        )
-      ) : confirmData || userDataPref === 'manual_entry' ? (
+      <h3 className='preset-header'>Farming Items</h3>
+      {userData ? (
         <>
-          <h3 className='preset-header'>Farming Items</h3>
           <div id='farming-items-wrapper' className='selections-wrapper'>
-            <div className='checkbox-label-wrapper'>
+            <div className='checkbox-label-wrapper single-item'>
               <input
                 id='magic-sec'
                 type='checkbox'
@@ -266,10 +42,195 @@ const NewProfilePage3: React.FC = () => {
                 Magic Secateurs
               </label>
             </div>
+            <div className='checkbox-label-wrapper single-item'>
+              <input
+                id='wild-sword'
+                type='checkbox'
+                style={{ display: 'none' }}
+              ></input>
+              <img
+                className='item-sprites'
+                src='https://runescape.wiki/images/Wilderness_sword_1_detail.png?642c3&20180131150459'
+                alt='Wilderness Sword 1+'
+              />
+              <label
+                id='item-labels'
+                className='checkbox-labels'
+                htmlFor='wild-sword'
+              >
+                Wilderness Sword
+              </label>
+            </div>
+            <div className='checkbox-label-wrapper single-item'>
+              <input
+                id='explorers-ring'
+                type='checkbox'
+                style={{ display: 'none' }}
+              ></input>
+              <img
+                className='item-sprites'
+                src='https://runescape.wiki/images/archive/20180910143816%21Explorer%27s_ring_3_detail.png?b8e3f'
+                alt="Explorer's Ring 3+"
+              />
+              <label
+                id='item-labels'
+                className='checkbox-labels'
+                htmlFor='explorers-ring'
+              >
+                Explorer's Ring 3
+              </label>
+            </div>
+            <div className='checkbox-label-wrapper single-item'>
+              <input
+                id='ardy-cloak'
+                type='checkbox'
+                style={{ display: 'none' }}
+              ></input>
+              <img
+                className='item-sprites'
+                src='https://runescape.wiki/images/thumb/Ardougne_cloak_4_detail.png/570px-Ardougne_cloak_4_detail.png?6b983&20120818213812'
+                alt='Ardougne Cloak 2+'
+              />
+              <label
+                id='item-labels'
+                className='checkbox-labels'
+                htmlFor='ardy-cloak'
+              >
+                V Ardougne Cloak
+              </label>
+            </div>
+            <div className='checkbox-label-wrapper single-item'>
+              <input
+                id='tir-quiver'
+                type='checkbox'
+                style={{ display: 'none' }}
+              ></input>
+              <img
+                className='item-sprites'
+                src='https://runescape.wiki/images/Tirannwn_quiver_4_detail.png?7ccbd&20141216200512'
+                alt='Tirannwn Quiver'
+              />
+              <label
+                id='item-labels'
+                className='checkbox-labels'
+                htmlFor='tir-quiver'
+              >
+                V Tirannwn Quiver
+              </label>
+            </div>
+            <div className='checkbox-label-wrapper single-item'>
+              <input
+                id='attuned-tp'
+                type='checkbox'
+                style={{ display: 'none' }}
+              ></input>
+              <img
+                className='item-sprites'
+                src='https://runescape.wiki/images/thumb/Attuned_crystal_teleport_seed_detail.png/75px-Attuned_crystal_teleport_seed_detail.png?b4cb1&20170411101927'
+                alt='Attuned Crystal Teleport Seed'
+              />
+              <label
+                id='item-labels'
+                className='checkbox-labels'
+                htmlFor='attuned-tp'
+              >
+                Attuned Crystal
+              </label>
+            </div>
+            <div className='checkbox-label-wrapper single-item'>
+              <input
+                id='juju'
+                type='checkbox'
+                style={{ display: 'none' }}
+              ></input>
+              <img
+                className='item-sprites'
+                src='https://runescape.wiki/images/archive/20110611225619%21Juju_teleport_spiritbag_detail.png?3229f'
+                alt='Juju / Witchdoctor'
+              />
+              <label
+                id='item-labels'
+                className='checkbox-labels'
+                htmlFor='juju'
+              >
+                Juju / Witchdoctor
+              </label>
+            </div>
+            <div className='checkbox-label-wrapper single-item'>
+              <input
+                id='spirit-tree'
+                type='checkbox'
+                style={{ display: 'none' }}
+              ></input>
+              <img
+                className='item-sprites'
+                src='https://runescape.wiki/images/Spirit_tree_re-rooter_detail.png?fcdc8&20180621103114'
+                alt='Spirit Tree Re-rooter'
+              />
+              <label
+                id='item-labels'
+                className='checkbox-labels'
+                htmlFor='spirit-tree'
+              >
+                <img
+                  className='inv-icon'
+                  src='https://runescape.wiki/images/Invention.png?b4132&20221124145106'
+                  alt='invention-icon'
+                />
+                Spirit Tree
+              </label>
+            </div>
+            <div className='checkbox-label-wrapper single-item'>
+              <input
+                id='fairy-rings'
+                type='checkbox'
+                style={{ display: 'none' }}
+              ></input>
+              <img
+                className='item-sprites'
+                src='https://runescape.wiki/images/thumb/Portable_fairy_ring_%28inactive%29_detail.png/120px-Portable_fairy_ring_%28inactive%29_detail.png?f96cd&20220605170524'
+                alt='Portable Fairy Ring'
+              />
+              <label
+                id='item-labels'
+                className='checkbox-labels'
+                htmlFor='fairy-rings'
+              >
+                <img
+                  className='inv-icon'
+                  src='https://runescape.wiki/images/Invention.png?b4132&20221124145106'
+                  alt='invention-icon'
+                />
+                Fairy Ring
+              </label>
+            </div>
+          </div>
+          <div className='dbl-btn-wrapper'>
+            <button
+              onClick={() => navHandler('/new-user/profile/2')}
+              className='nis-button nis-button-alt'
+            >
+              Back
+            </button>
+            <button onClick={() => navHandler('/404')} className='nis-button'>
+              Next
+            </button>
           </div>
         </>
       ) : (
-        <></>
+        <>
+          <div id='error-msg'>Unknown Error</div>
+          <div id='error-txt-body'>Hey! You shouldn't be here!</div>
+          <div id='error-txt-body'>
+            (something went wrong or you manually navigated here)
+          </div>
+          <button
+            onClick={() => navHandler('/')}
+            className='nis-button nis-button-alt'
+          >
+            Go Back
+          </button>
+        </>
       )}
     </main>
   );

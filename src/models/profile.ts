@@ -25,8 +25,8 @@ export default interface Profile {
     farmingLvl: number;
   };
   quests: Quests;
-  userHasQuestCape: boolean;
   items: Items;
   presets: UserPresets;
   reset?: any;
+  completed: boolean;
 }

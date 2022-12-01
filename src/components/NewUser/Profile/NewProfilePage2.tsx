@@ -1,30 +1,35 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { UserData } from '../../../models/api-responses';
+// import { enterSubmitHandler } from '../../../utils/helpers';
 
 const NewProfilePage2: React.FC = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const navHandler = (path: string) => {
-    const inputMagicLvl = (
-      document.getElementById('magic-lvl-input')! as HTMLInputElement
-    ).value;
-    const inputFarmingLvl = (
-      document.getElementById('farming-lvl-input')! as HTMLInputElement
-    ).value;
-    if (inputMagicLvl && inputFarmingLvl) {
-      const userData: UserData = JSON.parse(
-        localStorage.getItem('efr_user_data')!
-      );
+    const { value: inputMagicLvl } = document.getElementById(
+      'magic-lvl-input'
+    )! as HTMLInputElement;
+    const { value: inputFarmingLvl } = document.getElementById(
+      'farming-lvl-input'
+    )! as HTMLInputElement;
+    if (
+      inputMagicLvl &&
+      inputFarmingLvl &&
+      +inputMagicLvl &&
+      +inputFarmingLvl
+    ) {
+      const userData = JSON.parse(localStorage.getItem('efficient_farm_runs')!);
       userData.levels.magicLvl = +inputMagicLvl;
       userData.levels.farmingLvl = +inputFarmingLvl;
-      localStorage.setItem('efr_user_data', JSON.stringify(userData));
-      navigate(path);
+
+      localStorage.setItem('efficient_farm_runs', JSON.stringify(userData));
     } else {
-      setError('Enter Your Levels!');
+      return setError('Enter Your Levels!');
     }
+    navigate(path);
   };
+
   return (
     <main className='outer-wrapper'>
       <h3 className='preset-header'>
@@ -35,7 +40,6 @@ const NewProfilePage2: React.FC = () => {
         />
         What is your level in ...
       </h3>
-      <div id='error-msg'>{error}</div>
       <div className='selections-wrapper'></div>
       <div id='levels-wrapper'>
         <img
@@ -48,6 +52,7 @@ const NewProfilePage2: React.FC = () => {
           id='magic-lvl-input'
           className='level-input'
           placeholder='1'
+          maxLength={2}
         ></input>
       </div>
       <div id='levels-wrapper'>
@@ -61,14 +66,25 @@ const NewProfilePage2: React.FC = () => {
           id='farming-lvl-input'
           className='level-input'
           placeholder='1'
+          maxLength={3}
+          // onKeyDown={(e) => enterSubmitHandler(e)}
         ></input>
       </div>
-      <button
-        className='nis-button'
-        onClick={() => navHandler('/new-user/profile/3')}
-      >
-        Next
-      </button>
+      <div id='error-msg'>{error}</div>
+      <div className='dbl-btn-wrapper'>
+        <button
+          className='nis-button nis-button-alt'
+          onClick={() => navigate('/new-user/profile/1')}
+        >
+          Back
+        </button>
+        <button
+          className='nis-button'
+          onClick={() => navHandler('/new-user/profile/3')}
+        >
+          Next
+        </button>
+      </div>
     </main>
   );
 };

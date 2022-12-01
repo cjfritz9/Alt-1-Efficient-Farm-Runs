@@ -1,9 +1,9 @@
 import { Route, Routes } from 'react-router-dom';
+import Home from './Home';
+import Landing from './Landing';
 import NewProfilePage1 from './NewUser/Profile/NewProfilePage1';
 import NewProfilePage2 from './NewUser/Profile/NewProfilePage2';
 import NewProfilePage3 from './NewUser/Profile/NewProfilePage3';
-import Home from './Home';
-import Landing from './Landing';
 
 const App: React.FC = () => {
   return (
