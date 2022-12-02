@@ -57,7 +57,7 @@ const NewProfilePage1: React.FC = () => {
         setTriggerLoading(true);
       }
     }
-  }, []);
+  }, [triggerLoading]);
 
   return (
     <main className='outer-wrapper'>
