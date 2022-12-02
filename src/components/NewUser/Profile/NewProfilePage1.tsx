@@ -1,11 +1,10 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
 import Profile, { Quests } from '../../../models/profile';
 
 const NewProfilePage1: React.FC = () => {
-  const profileRef = useRef<Profile>(
-    JSON.parse(localStorage.getItem('efficient_farm_runs')!)
-  );
+  const [triggerLoading, setTriggerLoading] = useState(false);
+  const profileRef = useRef<Profile>();
 
   const navigate = useNavigate();
 
@@ -17,11 +16,15 @@ const NewProfilePage1: React.FC = () => {
       .parentElement as HTMLDivElement;
 
     if (element.classList.contains('cb-selected')) {
+      console.log("HERE");
+      
       element.classList.remove('cb-selected');
     } else {
       element.classList.add('cb-selected');
     }
-    profileRef.current.quests[setting as keyof Quests] = toggleActive;
+    if (profileRef.current && profileRef.current.quests) {
+      profileRef.current.quests[setting as keyof Quests] = toggleActive;
+    }
   };
 
   const navHandler = (path: string): void => {
@@ -31,6 +34,32 @@ const NewProfilePage1: React.FC = () => {
     );
     navigate(path);
   };
+
+  const getPrevQuests = (dataObj: Profile) => {
+    return Object.keys(dataObj.quests).filter(
+      (quest) => dataObj.quests[quest as keyof Quests] === true
+    );
+  };
+
+  const setFormState = (prevData: Profile) => {
+    const prevQuestsArr = getPrevQuests(prevData);
+
+    prevQuestsArr.forEach((quest) => {
+      questsPresetUpdateHandler(true, quest);
+    });
+    console.log('PQD', prevQuestsArr);
+    // setTriggerLoading(true);
+  };
+
+  useEffect(() => {
+    const fetchUserData = localStorage.getItem('efficient_farm_runs');
+    if (fetchUserData) {
+      profileRef.current = JSON.parse(fetchUserData);
+      if (profileRef.current && profileRef.current.quests)
+        setFormState(profileRef.current);
+      setTriggerLoading(true)
+    }
+  }, [setFormState]);
 
   return (
     <main className='outer-wrapper'>

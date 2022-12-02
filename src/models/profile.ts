@@ -1,11 +1,11 @@
 import { UserPresets } from './preset';
 
 export interface Quests {
+  treeGnomeVillage: boolean;
   maba: boolean;
   plaguesEnd: boolean;
   lunarDiplomacy: boolean;
   fairyTale1: boolean;
-  treeGnomeVillage: boolean;
   loveStory: boolean;
   theLightWithin: boolean;
   pog: boolean;

@@ -12,7 +12,10 @@ const NewProfilePage2: React.FC = () => {
     const { value: inputFarmingLvl } = document.getElementById(
       'farming-lvl-input'
     )! as HTMLInputElement;
-    if (
+    if (inputMagicLvl && inputFarmingLvl && +inputFarmingLvl > 120) {
+      console.log(+inputFarmingLvl);
+      return setError('Enter a valid level!');
+    } else if (
       inputMagicLvl &&
       +inputMagicLvl &&
       inputFarmingLvl &&
@@ -30,6 +33,7 @@ const NewProfilePage2: React.FC = () => {
   };
 
   const enterSubmitHandler = (e: any) => {
+    setError('');
     if (e.key === 'Enter' && e.shiftKey === false) {
       navHandler('/new-user/presets/1');
     }
@@ -58,6 +62,7 @@ const NewProfilePage2: React.FC = () => {
           className='level-input'
           placeholder='1'
           maxLength={2}
+          onKeyDown={(e) => enterSubmitHandler(e)}
         ></input>
       </div>
       <div id='levels-wrapper'>
@@ -79,7 +84,7 @@ const NewProfilePage2: React.FC = () => {
       <div className='dbl-btn-wrapper'>
         <button
           className='nis-button nis-button-alt'
-          onClick={() => navigate('/new-user/presets/1')}
+          onClick={() => navigate('/new-user/profile/1')}
         >
           Back
         </button>

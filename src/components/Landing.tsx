@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router';
 import defaultProfile from '../utils/defaults';
 
 const Landing: React.FC = () => {
+  const [profileName, setProfileName] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
@@ -41,18 +42,25 @@ const Landing: React.FC = () => {
     localStorage.setItem('efficient_farm_runs', '{"completed": true}');
     window.location.reload();
   };
-  
+
   const enterSubmitHandler = (e: any) => {
+    setError('');
     if (e.key === 'Enter' && e.shiftKey === false) {
       navHandler('/new-user/profile/1');
     }
   };
 
+  const changeHandler = (nameInput: string) => {
+    setProfileName(nameInput);
+  };
+
   useEffect(() => {
     const data = localStorage.getItem('efficient_farm_runs');
     if (data) {
-      console.log(data);
       const prevProfile = JSON.parse(data);
+      if (prevProfile && prevProfile.name) {
+        setProfileName(prevProfile.name);
+      }
       if (prevProfile && prevProfile.completed) {
         setError('Profile Detected');
       }
@@ -87,12 +95,14 @@ const Landing: React.FC = () => {
       ) : (
         <>
           <div id='levels-wrapper' className='selections-wrapper'>
-            <label htmlFor='username-input'>New Profile</label>
+            <label htmlFor='username-input'>Create New Profile</label>
             <input
               id='username-input'
               placeholder='Pick a name!'
-                maxLength={12}
-                onKeyDown={(e) => enterSubmitHandler(e)}
+              value={profileName}
+              maxLength={12}
+              onChange={(e) => changeHandler(e.target.value)}
+              onKeyDown={(e) => enterSubmitHandler(e)}
             ></input>
           </div>
           <div className='dbl-button-wrapper'>

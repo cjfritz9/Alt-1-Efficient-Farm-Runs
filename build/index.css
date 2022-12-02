@@ -25,7 +25,7 @@ body {
   letter-spacing: 0.75px;
   text-shadow: 1px 1px 2px #ecc622;
   font-size: 18px;
-  margin: 5px;
+  margin: 20px 5px;
   padding: 0px 12px;
   line-height: 32px;
   user-select: none;
@@ -168,12 +168,19 @@ body {
   height: 100%;
 }
 
-.dbl-button-wrapper {
+.dbl-btn-wrapper {
   display: flex;
   margin-top: 30px;
 }
 
+#error-txt-body {
+  text-align: center;
+  padding: 0px 12px;
+}
+
 #qc-bubble {
+  /* height: 15px;
+  width: 15px; */
   margin-right: 5px;
 }
 
@@ -214,7 +221,29 @@ body {
 }
 
 .item-sprites {
+  box-shadow: 0px 0px 6px .1px rgb(255, 255, 255);
+  background-color: white;
+  border-radius: 5px;
+  margin: 2px;
   padding: 3px;
+  height: 25px;
+  width: 25px;  
+  min-height: 25px;
+  min-width: 25px;
+}
+
+.inv-icon {
+  height: 20px;
+  width: 20px;
+  margin-right: 5px;
+}
+
+#farming-items-wrapper {
+  height: 300px;
+}
+
+.single-item {
+  width: 200px;
 }
 
 #acc-info-username {
@@ -230,7 +259,7 @@ body {
 
 #error-msg {
   text-align: center;
-  color: red;
+  color: rgb(224, 85, 85);
   text-shadow: 1px 1px 1px #000;
   margin-bottom: 15px;
   font-size: 24px;
