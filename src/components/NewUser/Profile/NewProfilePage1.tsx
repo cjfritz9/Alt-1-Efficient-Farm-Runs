@@ -22,7 +22,7 @@ const NewProfilePage1: React.FC = () => {
         profileRef.current.quests[cbInput.id as keyof Quests] = false;
       } else {
         element.classList.add('cb-selected');
-        profileRef.current.quests[cbInput.id as keyof Quests] = true;
+        questsObj[cbInput.id as keyof Quests] = true;
       }
     }
   };
@@ -41,24 +41,23 @@ const NewProfilePage1: React.FC = () => {
     );
   };
 
-  const setFormState = (prevData: Profile) => {
-    const prevQuestsArr = getPrevQuests(prevData);
-
-    prevQuestsArr.forEach((quest) => {
-      questsPresetUpdateHandler(quest);
-    });
-  };
-
   useEffect(() => {
     const fetchUserData = localStorage.getItem('efficient_farm_runs');
     if (fetchUserData) {
       profileRef.current = JSON.parse(fetchUserData);
       if (profileRef.current && profileRef.current.quests) {
+        const setFormState = (prevData: Profile) => {
+          const prevQuestsArr = getPrevQuests(prevData);
+
+          prevQuestsArr.forEach((quest) => {
+            questsPresetUpdateHandler(quest);
+          });
+        };
         setFormState(profileRef.current);
         setTriggerLoading(true);
       }
     }
-  }, [setFormState]);
+  }, []);
 
   return (
     <main className='outer-wrapper'>
