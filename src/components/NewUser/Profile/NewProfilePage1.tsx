@@ -8,22 +8,22 @@ const NewProfilePage1: React.FC = () => {
 
   const navigate = useNavigate();
 
-  const questsPresetUpdateHandler = (
-    toggleActive: boolean,
-    setting: string
-  ): void => {
-    const element = document.getElementById(setting)!
-      .parentElement as HTMLDivElement;
-
-    if (element.classList.contains('cb-selected')) {
-      console.log("HERE");
-      
-      element.classList.remove('cb-selected');
-    } else {
-      element.classList.add('cb-selected');
-    }
+  const questsPresetUpdateHandler = (setting: string): void => {
+    let questsObj: Quests;
     if (profileRef.current && profileRef.current.quests) {
-      profileRef.current.quests[setting as keyof Quests] = toggleActive;
+      questsObj = profileRef.current.quests;
+
+      const element = document.getElementById(setting)!
+        .parentElement as HTMLDivElement;
+      const cbInput = element.firstChild as HTMLDivElement;
+
+      if (element.classList.contains('cb-selected')) {
+        element.classList.remove('cb-selected');
+        profileRef.current.quests[cbInput.id as keyof Quests] = false;
+      } else {
+        element.classList.add('cb-selected');
+        profileRef.current.quests[cbInput.id as keyof Quests] = true;
+      }
     }
   };
 
@@ -45,19 +45,18 @@ const NewProfilePage1: React.FC = () => {
     const prevQuestsArr = getPrevQuests(prevData);
 
     prevQuestsArr.forEach((quest) => {
-      questsPresetUpdateHandler(true, quest);
+      questsPresetUpdateHandler(quest);
     });
-    console.log('PQD', prevQuestsArr);
-    // setTriggerLoading(true);
   };
 
   useEffect(() => {
     const fetchUserData = localStorage.getItem('efficient_farm_runs');
     if (fetchUserData) {
       profileRef.current = JSON.parse(fetchUserData);
-      if (profileRef.current && profileRef.current.quests)
+      if (profileRef.current && profileRef.current.quests) {
         setFormState(profileRef.current);
-      setTriggerLoading(true)
+        setTriggerLoading(true);
+      }
     }
   }, [setFormState]);
 
@@ -70,9 +69,7 @@ const NewProfilePage1: React.FC = () => {
             id='treeGnomeVillage'
             type='checkbox'
             style={{ display: 'none' }}
-            onClick={(e: any) =>
-              questsPresetUpdateHandler(e.target.checked, e.target.id)
-            }
+            onClick={(e: any) => questsPresetUpdateHandler(e.target.id)}
           ></input>
           <label className='checkbox-labels' htmlFor='treeGnomeVillage'>
             Tree Gnome Village
@@ -83,9 +80,7 @@ const NewProfilePage1: React.FC = () => {
             id='maba'
             type='checkbox'
             style={{ display: 'none' }}
-            onClick={(e: any) =>
-              questsPresetUpdateHandler(e.target.checked, e.target.id)
-            }
+            onClick={(e: any) => questsPresetUpdateHandler(e.target.id)}
           ></input>
           <label className='checkbox-labels' htmlFor='maba'>
             My Arm's Big Adventure
@@ -96,9 +91,7 @@ const NewProfilePage1: React.FC = () => {
             id='plaguesEnd'
             type='checkbox'
             style={{ display: 'none' }}
-            onClick={(e: any) =>
-              questsPresetUpdateHandler(e.target.checked, e.target.id)
-            }
+            onClick={(e: any) => questsPresetUpdateHandler(e.target.id)}
           ></input>
           <label className='checkbox-labels' htmlFor='plaguesEnd'>
             Plague's End
@@ -109,9 +102,7 @@ const NewProfilePage1: React.FC = () => {
             id='lunarDiplomacy'
             type='checkbox'
             style={{ display: 'none' }}
-            onClick={(e: any) =>
-              questsPresetUpdateHandler(e.target.checked, e.target.id)
-            }
+            onClick={(e: any) => questsPresetUpdateHandler(e.target.id)}
           ></input>
           <label className='checkbox-labels' htmlFor='lunarDiplomacy'>
             Lunar Diplomacy
@@ -122,9 +113,7 @@ const NewProfilePage1: React.FC = () => {
             id='fairyTale1'
             type='checkbox'
             style={{ display: 'none' }}
-            onClick={(e: any) =>
-              questsPresetUpdateHandler(e.target.checked, e.target.id)
-            }
+            onClick={(e: any) => questsPresetUpdateHandler(e.target.id)}
           ></input>
           <label className='checkbox-labels' htmlFor='fairyTale1'>
             Fairy Tale Pt. 1
@@ -135,9 +124,7 @@ const NewProfilePage1: React.FC = () => {
             id='loveStory'
             type='checkbox'
             style={{ display: 'none' }}
-            onClick={(e: any) =>
-              questsPresetUpdateHandler(e.target.checked, e.target.id)
-            }
+            onClick={(e: any) => questsPresetUpdateHandler(e.target.id)}
           ></input>
           <label className='checkbox-labels' htmlFor='loveStory'>
             Love Story
@@ -148,9 +135,7 @@ const NewProfilePage1: React.FC = () => {
             id='theLightWithin'
             type='checkbox'
             style={{ display: 'none' }}
-            onClick={(e: any) =>
-              questsPresetUpdateHandler(e.target.checked, e.target.id)
-            }
+            onClick={(e: any) => questsPresetUpdateHandler(e.target.id)}
           ></input>
           <label className='checkbox-labels' htmlFor='theLightWithin'>
             The Light Within
@@ -161,9 +146,7 @@ const NewProfilePage1: React.FC = () => {
             id='pog'
             type='checkbox'
             style={{ display: 'none' }}
-            onClick={(e: any) =>
-              questsPresetUpdateHandler(e.target.checked, e.target.id)
-            }
+            onClick={(e: any) => questsPresetUpdateHandler(e.target.id)}
           ></input>
           <label className='checkbox-labels' htmlFor='pog'>
             The Prisoner of Glouphrie
@@ -174,9 +157,7 @@ const NewProfilePage1: React.FC = () => {
             id='tgbr'
             type='checkbox'
             style={{ display: 'none' }}
-            onClick={(e: any) =>
-              questsPresetUpdateHandler(e.target.checked, e.target.id)
-            }
+            onClick={(e: any) => questsPresetUpdateHandler(e.target.id)}
           ></input>
           <label className='checkbox-labels' htmlFor='tgbr'>
             The Great Brain Robbery

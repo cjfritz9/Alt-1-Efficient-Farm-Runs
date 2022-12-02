@@ -1,8 +1,14 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Profile from '../../../models/profile';
 
 const NewProfilePage2: React.FC = () => {
+  const [triggerLoading, setTriggerLoading] = useState(false);
+  const [magicInput, setMagicInput] = useState('');
+  const [farmingInput, setFarmingInput] = useState('');
   const [error, setError] = useState('');
+  const profileRef = useRef<Profile>();
+
   const navigate = useNavigate();
 
   const navHandler = (path: string) => {
@@ -32,12 +38,44 @@ const NewProfilePage2: React.FC = () => {
     navigate(path);
   };
 
+  const setFormState = (magicLvl: string, farmingLvl: string) => {
+    setMagicInput(magicLvl);
+    setFarmingInput(farmingLvl);  
+  };
+
+  const levelInputHandler = (value: string, skill: string) => {
+    if (skill === 'm') {
+      console.log("TEST");
+      
+      setMagicInput(value);
+    } else {
+      setFarmingInput(value);
+    }
+  };
+
   const enterSubmitHandler = (e: any) => {
     setError('');
     if (e.key === 'Enter' && e.shiftKey === false) {
       navHandler('/new-user/presets/1');
     }
   };
+
+  useEffect(() => {
+    const fetchUserData = localStorage.getItem('efficient_farm_runs');
+    if (fetchUserData) {
+      profileRef.current = JSON.parse(fetchUserData);
+      if (profileRef.current && profileRef.current.levels)
+        if (
+          profileRef.current.levels.farmingLvl &&
+          profileRef.current.levels.magicLvl
+        ) {
+          const farmLvl = profileRef.current.levels.farmingLvl.toString();
+          const magicLvl = profileRef.current.levels.magicLvl.toString();
+          setFormState(magicLvl, farmLvl);
+        }
+      setTriggerLoading(true);
+    }
+  }, []);
 
   return (
     <main className='outer-wrapper'>
@@ -60,8 +98,10 @@ const NewProfilePage2: React.FC = () => {
         <input
           id='magic-lvl-input'
           className='level-input'
+          value={magicInput}
           placeholder='1'
           maxLength={2}
+          onChange={(e) => levelInputHandler(e.target.value, 'm')}
           onKeyDown={(e) => enterSubmitHandler(e)}
         ></input>
       </div>
@@ -75,8 +115,10 @@ const NewProfilePage2: React.FC = () => {
         <input
           id='farming-lvl-input'
           className='level-input'
+          value={farmingInput}
           placeholder='1'
           maxLength={3}
+          onChange={(e) => levelInputHandler(e.target.value, 'f')}
           onKeyDown={(e) => enterSubmitHandler(e)}
         ></input>
       </div>
