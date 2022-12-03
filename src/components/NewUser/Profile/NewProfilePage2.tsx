@@ -79,14 +79,14 @@ const NewProfilePage2: React.FC = () => {
 
   return (
     <main className='outer-wrapper'>
-      <h3 className='preset-header'>
+      <h2 className='preset-header'>
         <img
           id='qc-bubble'
           src='https://i.ibb.co/XkzpY53/Quick-chat-button.webp'
           alt='Quick Chat Icon'
         />
         What is your level in ...
-      </h3>
+      </h2>
       <div className='selections-wrapper'></div>
       <div id='levels-wrapper'>
         <img

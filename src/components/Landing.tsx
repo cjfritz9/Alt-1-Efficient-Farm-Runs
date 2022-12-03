@@ -69,7 +69,7 @@ const Landing: React.FC = () => {
 
   return (
     <main className='outer-wrapper'>
-      <h3 className='preset-header'>Profile</h3>
+      <h2 className='preset-header'>Profile</h2>
       {error && error.includes('Profile') ? (
         <>
           <div id='error-msg'>{error}</div>

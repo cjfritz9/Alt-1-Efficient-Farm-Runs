@@ -1,20 +1,20 @@
 import Preset from '../models/preset';
 import Profile from '../models/profile';
 
-export const defaultPreset: Preset = {
-  name: '',
-  patchTypes: {
-    allotment: false,
-    flower: false,
-    herb: false,
-    hops: false,
-    bush: false,
-    trees: false,
-    fruitTrees: false,
-    cactus: false,
-    mushroom: false
-  }
-};
+// export const defaultPreset: Preset = {
+//   name: '',
+//   patchTypes: {
+//     allotment: false,
+//     flower: false,
+//     herb: false,
+//     hops: false,
+//     bush: false,
+//     trees: false,
+//     fruitTrees: false,
+//     cactus: false,
+//     mushroom: false
+//   }
+// };
 
 export const profileData: Profile = {
   name: '',
@@ -36,13 +36,19 @@ export const profileData: Profile = {
   items: {},
   presets: {
     preset1: {
-      presets: defaultPreset
+      type: ''
     },
     preset2: {
-      presets: defaultPreset
+      type: ''
     },
     preset3: {
-      presets: defaultPreset
+      type: ''
+    },
+    preset4: {
+      type: ''
+    },
+    preset5: {
+      type: ''
     }
   },
   completed: false
@@ -82,13 +88,19 @@ const defaultProfile: Profile = {
   items: {},
   presets: {
     preset1: {
-      presets: defaultPreset
+      type: ''
     },
     preset2: {
-      presets: defaultPreset
+      type: ''
     },
     preset3: {
-      presets: defaultPreset
+      type: ''
+    },
+    preset4: {
+      type: ''
+    },
+    preset5: {
+      type: ''
     }
   },
   reset: resetProfile,

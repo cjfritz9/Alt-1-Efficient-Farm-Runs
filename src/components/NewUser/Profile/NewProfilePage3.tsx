@@ -19,7 +19,7 @@ const NewProfilePage3: React.FC = () => {
 
   return (
     <main className='outer-wrapper'>
-      <h3 className='preset-header'>Farming Items</h3>
+      <h2 className='preset-header'>Farming Items</h2>
       {userData ? (
         <>
           <div id='farming-items-wrapper' className='selections-wrapper'>

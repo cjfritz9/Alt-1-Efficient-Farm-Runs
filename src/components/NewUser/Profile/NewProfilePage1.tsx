@@ -61,7 +61,7 @@ const NewProfilePage1: React.FC = () => {
 
   return (
     <main className='outer-wrapper'>
-      <h3 className='preset-header'>Quests Completed</h3>
+      <h2 className='preset-header'>Quests Completed</h2>
       <div id='quests-completed-wrapper' className='selections-wrapper'>
         <div id='checkbox-quests-wrapper' className='checkbox-label-wrapper'>
           <input

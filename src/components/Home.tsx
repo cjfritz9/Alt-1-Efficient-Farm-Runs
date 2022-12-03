@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { UserPresets } from '../models/preset';
+import UserPresets from '../models/preset';
 
 const Home: React.FC = () => {
   const [presetData, setPresetData] = useState<UserPresets | null>(null);

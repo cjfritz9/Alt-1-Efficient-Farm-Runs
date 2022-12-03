@@ -1,28 +1,53 @@
-export interface PatchTypes {
-  allotment: boolean;
-  flower: boolean;
-  herb: boolean;
-  hops: boolean;
-  bush: boolean;
-  trees: boolean;
-  fruitTrees: boolean;
-  cactus: boolean;
-  mushroom: boolean;
-}
+// export interface PatchTypes {
+//   allotment: boolean;
+//   flower: boolean;
+//   herb: boolean;
+//   hops: boolean;
+//   bush: boolean;
+//   trees: boolean;
+//   fruitTrees: boolean;
+//   cactus: boolean;
+//   mushroom: boolean;
+// }
 
-export default interface Preset {
-  name: string;
-  patchTypes: PatchTypes;
-}
+export type Preset =
+  | 'herb'
+  | 'tree'
+  | 'fruit-tree'
+  | 'bush'
+  | 'cactus'
+  | 'mushroom'
+  | '';
 
-export interface UserPresets {
+export default interface UserPresets {
   preset1: {
-    presets: Preset;
+    type: Preset;
+    patches?: {
+      [name: string]: boolean;
+    }
   };
   preset2: {
-    presets: Preset;
+    type: Preset;
+    patches?: {
+      [name: string]: boolean;
+    }
   };
   preset3: {
-    presets: Preset;
+    type: Preset;
+    patches?: {
+      [name: string]: boolean;
+    }
+  };
+  preset4: {
+    type: Preset;
+    patches?: {
+      [name: string]: boolean;
+    }
+  };
+  preset5: {
+    type: Preset;
+    patches?: {
+      [name: string]: boolean;
+    }
   };
 }

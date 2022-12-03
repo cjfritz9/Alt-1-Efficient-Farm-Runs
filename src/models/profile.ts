@@ -1,4 +1,4 @@
-import { UserPresets } from './preset';
+import UserPresets from './preset';
 
 export interface Quests {
   treeGnomeVillage: boolean;
