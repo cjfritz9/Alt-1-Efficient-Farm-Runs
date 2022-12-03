@@ -221,13 +221,13 @@ body {
 }
 
 .item-sprites {
-  box-shadow: 0px 0px 6px .1px rgb(255, 255, 255);
+  box-shadow: 0px 0px 6px 0.1px rgb(255, 255, 255);
   background-color: white;
   border-radius: 5px;
   margin: 2px;
   padding: 3px;
   height: 25px;
-  width: 25px;  
+  width: 25px;
   min-height: 25px;
   min-width: 25px;
 }
@@ -280,7 +280,7 @@ body {
 
 #profile-name-input::placeholder {
   font-weight: bold;
-  color: #FFF;
+  color: #fff;
   text-align: center;
 }
 
@@ -299,7 +299,7 @@ body {
 
 #username-input::placeholder {
   font-weight: bold;
-  color: #FFF;
+  color: #fff;
   text-align: center;
 }
 
@@ -314,6 +314,22 @@ body {
   height: 18px;
   width: 18px;
   margin-right: 5px;
+}
+
+#run-type-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-content: space-evenly;
+  flex-wrap: wrap;
+  max-height: 200px;
+}
+
+#herb-patch-selections {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-content: space-evenly;
+  max-height: 240px;
 }
 
 @font-face {
