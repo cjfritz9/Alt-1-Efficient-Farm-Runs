@@ -12,31 +12,29 @@ const Landing: React.FC = () => {
       'username-input'
     ) as HTMLInputElement;
     const prevData = localStorage.getItem('efficient_farm_runs');
+    let profile;
     if (prevData) {
-      const profile = JSON.parse(prevData);
-      if (nameInput) {
-        const profileName = nameInput.value;
-        if (profileName && !profile) {
-          const newProfile = defaultProfile;
-          newProfile.name = profileName;
-          localStorage.setItem(
-            'efficient_farm_runs',
-            JSON.stringify(newProfile)
-          );
-        } else if (profileName && profile) {
-          profile.name = profileName;
-          localStorage.setItem('efficient_farm_runs', JSON.stringify(profile));
-        } else {
-          return setError('Enter A Valid Name');
-        }
+      profile = JSON.parse(prevData);
+    }
+    if (nameInput) {
+      const profileName = nameInput.value;
+      if (profileName && !profile) {
+        const newProfile = defaultProfile;
+        newProfile.name = profileName;
+        localStorage.setItem('efficient_farm_runs', JSON.stringify(newProfile));
+      } else if (profileName && profile) {
+        profile.name = profileName;
+        localStorage.setItem('efficient_farm_runs', JSON.stringify(profile));
+      } else {
+        return setError('Enter A Valid Name');
       }
     }
     navigate(path);
   };
 
   const confirmResetHandler = (confirmation: boolean) => {
+    defaultProfile.reset();
     if (confirmation) {
-      defaultProfile.reset();
       localStorage.setItem(
         'efficient_farm_runs',
         JSON.stringify(defaultProfile)
