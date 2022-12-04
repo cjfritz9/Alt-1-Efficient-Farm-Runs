@@ -19,7 +19,6 @@ const NewProfilePage2: React.FC = () => {
       'farming-lvl-input'
     )! as HTMLInputElement;
     if (inputMagicLvl && inputFarmingLvl && +inputFarmingLvl > 120) {
-      console.log(+inputFarmingLvl);
       return setError('Enter a valid level!');
     } else if (
       inputMagicLvl &&
@@ -40,13 +39,11 @@ const NewProfilePage2: React.FC = () => {
 
   const setFormState = (magicLvl: string, farmingLvl: string) => {
     setMagicInput(magicLvl);
-    setFarmingInput(farmingLvl);  
+    setFarmingInput(farmingLvl);
   };
 
   const levelInputHandler = (value: string, skill: string) => {
     if (skill === 'm') {
-      console.log("TEST");
-      
       setMagicInput(value);
     } else {
       setFarmingInput(value);
@@ -71,7 +68,9 @@ const NewProfilePage2: React.FC = () => {
         ) {
           const farmLvl = profileRef.current.levels.farmingLvl.toString();
           const magicLvl = profileRef.current.levels.magicLvl.toString();
-          setFormState(magicLvl, farmLvl);
+          if (+farmLvl && +magicLvl > 1) {
+            setFormState(magicLvl, farmLvl);
+          }
         }
       setTriggerLoading(true);
     }

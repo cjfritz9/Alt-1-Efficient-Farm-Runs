@@ -84,6 +84,14 @@ body {
   width: 31%;
 }
 
+#presets-add-btn {
+  margin-bottom: 5px;
+}
+
+#presets-btn-wrapper {
+  margin-top: 5px;
+}
+
 .preset-header {
   color: #ecc622;
   text-align: center;
@@ -99,6 +107,10 @@ body {
   text-shadow: 2px 2px 2px 2px rgb(155, 155, 155);
   text-decoration: underline;
   margin: 12px 0px;
+}
+
+#options-header {
+  margin: 5px 5px;
 }
 
 .selections-wrapper {
@@ -147,6 +159,21 @@ body {
   border: 1px solid #ecc622;
 }
 
+.cb-restricted {
+  filter: opacity(.65);
+  color: rgba(255, 255, 255, 0.5);
+  text-decoration: line-through;
+  cursor: not-allowed;
+}
+
+.cb-restricted:hover {
+  background-color: rgb(59, 59, 59);
+}
+
+.cb-restricted:hover * {
+  pointer-events: none;
+}
+
 #checkbox-quests-wrapper {
   width: 160px;
   height: 40px;
@@ -166,6 +193,10 @@ body {
   text-align: center;
   width: 100%;
   height: 100%;
+}
+
+#preset-selection-btn {
+  margin: 5px 5px;
 }
 
 .dbl-btn-wrapper {

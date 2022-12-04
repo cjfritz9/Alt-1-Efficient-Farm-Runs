@@ -1,7 +1,6 @@
 import { BaseSyntheticEvent, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Preset } from '../../../../models/preset';
-import Profile from '../../../../models/profile';
+import Profile, { Quests } from '../../../../models/profile';
 
 const HerbPatches: React.FC = () => {
   const [render, setRender] = useState(false);
@@ -9,25 +8,41 @@ const HerbPatches: React.FC = () => {
 
   const navigate = useNavigate();
 
-  const selectionUpdateHandler = (setting: string): void => {
+  const selectionUpdateHandler = (
+    setting: string,
+    quests: string[] = []
+  ): void => {
     const preset = profileRef.current?.presets.preset1;
 
-    const element = document.getElementById(setting)!
-      .parentElement as HTMLDivElement;
-
-    if (preset && preset.patches) {
+    if (preset && setting && preset.patches) {
+      const element = document.getElementById(setting)!
+        .parentElement as HTMLDivElement;
       if (element.classList.contains('cb-selected')) {
         element.classList.remove('cb-selected');
         preset.patches[setting] = false;
       } else {
-        console.log(setting);
         element.classList.add('cb-selected');
         preset.patches[setting] = true;
+      }
+    }
+    if (preset && quests.length) {
+      if (quests.includes('maba')) {
+        document
+          .getElementById('trollStronghold')!
+          .parentElement!.classList.add('cb-restricted');
+      }
+      if (quests.includes('plaguesEnd')) {
+        document
+          .getElementById('prifddinas')!
+          .parentElement!.classList.add('cb-restricted');
       }
     }
   };
 
   const navHandler = (path: string) => {
+    if (profileRef.current) {
+      profileRef.current.completed = true;
+    }
     localStorage.setItem(
       'efficient_farm_runs',
       JSON.stringify(profileRef.current)
@@ -42,17 +57,17 @@ const HerbPatches: React.FC = () => {
   };
 
   useEffect(() => {
-    const profile = localStorage.getItem('efficient_farm_runs');
-    if (profile) {
-      profileRef.current = JSON.parse(profile);
-      if (profileRef.current && profileRef.current.presets) {
-        const presets = profileRef.current.presets;
+    const profileData = localStorage.getItem('efficient_farm_runs');
+    if (profileData) {
+      profileRef.current = JSON.parse(profileData);
+      const profile = profileRef.current;
+      if (profile && profile.presets) {
+        const presets = profile.presets;
         if (presets.preset1.patches) {
           const prevSelections = getPrevSelections(presets.preset1.patches);
           prevSelections.forEach((patch) => {
             selectionUpdateHandler(patch);
           });
-          setRender(true);
         } else {
           presets.preset1.patches = {
             southFalador: false,
@@ -65,6 +80,11 @@ const HerbPatches: React.FC = () => {
             prifddinas: false
           };
         }
+        const incompleteQuests = Object.keys(profile.quests).filter(
+          (quest) => profile.quests[quest as keyof Quests] === false
+        );
+        selectionUpdateHandler('', incompleteQuests);
+        setRender(true);
       }
     }
   }, [render]);
@@ -185,10 +205,7 @@ const HerbPatches: React.FC = () => {
         >
           Back
         </button>
-        <button
-          onClick={() => navHandler('/new-user/presets/3')}
-          className='nis-button'
-        >
+        <button onClick={() => navHandler('/home')} className='nis-button'>
           Next
         </button>
       </div>
