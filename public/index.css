@@ -195,6 +195,18 @@ body {
   height: 100%;
 }
 
+.edit-btn {
+  filter: brightness(.75) saturate(1.5) hue-rotate(-30deg);
+}
+
+.del-btn {
+  filter: brightness(.75) saturate(1.5) hue-rotate(-30deg);
+}
+
+.button-selected {
+  filter: brightness(1.25);
+}
+
 #preset-selection-btn {
   margin: 5px 5px;
 }
