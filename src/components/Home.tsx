@@ -65,10 +65,6 @@ const Home: React.FC = () => {
     }
   };
 
-  const navHandler = (path: string) => {
-
-  }
-
   useEffect(() => {
     const rawPresetData = localStorage.getItem('efficient_farm_runs');
     if (rawPresetData) {
