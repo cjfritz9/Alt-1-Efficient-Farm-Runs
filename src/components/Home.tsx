@@ -8,8 +8,6 @@ const Home: React.FC = () => {
   const [editMode, setEditMode] = useState<boolean>(false);
   const [deleteMode, setDeleteMode] = useState<boolean>(false);
   const presetCountRef = useRef<number>(0);
-  // console.log('ED', editMode);
-  // console.log('DEL', deleteMode);
 
   const navigate = useNavigate();
 
@@ -18,7 +16,6 @@ const Home: React.FC = () => {
   };
 
   const setCasing = (patchType: string) => {
-    // console.log(patchType);
     if (patchType === 'fruit-tree') {
       return 'Fruit Tree';
     } else if (patchType.length) {
@@ -46,7 +43,7 @@ const Home: React.FC = () => {
         setDeleteMode(false);
       }
       const editButton = document.getElementById('preset-edit-btn')!;
-      // editButton.classList.remove('');
+
       if (editButton.classList.contains('button-selected')) {
         editButton.classList.remove('button-selected');
       } else {
@@ -67,6 +64,10 @@ const Home: React.FC = () => {
       setDeleteMode((prevDeleteMode) => !prevDeleteMode);
     }
   };
+
+  const navHandler = (path: string) => {
+
+  }
 
   useEffect(() => {
     const rawPresetData = localStorage.getItem('efficient_farm_runs');
