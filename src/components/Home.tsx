@@ -11,8 +11,8 @@ const Home: React.FC = () => {
 
   const navigate = useNavigate();
 
-  const navigateHandler = (url: string): void => {
-    navigate(url);
+  const navigateHandler = (path: string): void => {
+    navigate(path);
   };
 
   const setCasing = (patchType: string) => {
@@ -73,7 +73,6 @@ const Home: React.FC = () => {
       presetCountRef.current = Object.values(parsedUserData.presets).filter(
         (preset) => preset.type.length
       ).length;
-      // console.log(presetCountRef.current);
     }
   }, []);
 

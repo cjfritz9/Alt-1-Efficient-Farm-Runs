@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import Profile from '../../../models/profile';
 
 const NewProfilePage2: React.FC = () => {
-  const [triggerLoading, setTriggerLoading] = useState(false);
   const [magicInput, setMagicInput] = useState('');
   const [farmingInput, setFarmingInput] = useState('');
   const [error, setError] = useState('');
@@ -72,7 +71,6 @@ const NewProfilePage2: React.FC = () => {
             setFormState(magicLvl, farmLvl);
           }
         }
-      setTriggerLoading(true);
     }
   }, []);
 

@@ -5,9 +5,9 @@ const NewProfilePage3: React.FC = () => {
   const [userData, setUserData] = useState(null);
   const navigate = useNavigate();
 
-  const navHandler = (url: string) => {
+  const navHandler = (path: string) => {
     localStorage.setItem('efficient_farm_runs', JSON.stringify(userData));
-    navigate(url);
+    navigate(path);
   };
 
   useEffect(() => {

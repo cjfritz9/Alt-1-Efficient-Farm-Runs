@@ -1,4 +1,3 @@
-import Preset from '../models/preset';
 import Profile from '../models/profile';
 
 // export const defaultPreset: Preset = {
