@@ -1,10 +1,9 @@
-import axios from 'axios';
-
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+const axios = require('axios');
 
-export const app = express();
+const app = express();
 const PORT = process.env.PORT || 8080;
 
 app.use(express.json());
@@ -27,7 +26,7 @@ app.get('/api/rs3/skills/:username', async (req, res) => {
       }
     )
     .then((response) => {
-      console.log(response.data)
+      console.log(response.data);
       if (response.data.error) return res.send(response.data);
       const skills = response.data.skillvalues;
       const hasQuestCape =
@@ -42,7 +41,11 @@ app.get('/api/rs3/skills/:username', async (req, res) => {
       desiredSkills.forEach((skill: any) => {
         skill.skill = skill.id === 19 ? 'Farming' : 'Magic';
       });
-      res.send({ name: response.data.name, hasQuestCape, levels: desiredSkills });
+      res.send({
+        name: response.data.name,
+        hasQuestCape,
+        levels: desiredSkills
+      });
     })
     .catch((err) => {
       console.error('error: ', err);
@@ -53,3 +56,5 @@ app.get('/api/rs3/skills/:username', async (req, res) => {
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
 });
+
+module.exports = { app };
